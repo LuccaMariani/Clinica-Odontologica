@@ -1,0 +1,85 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="registerPacienteForm" class="p-4 p-md-3 rounded-3 cuadro">
+    <div class="row g-2">
+        <div class="col-md">
+            <div class="form-floating mb-2">
+                <input type="name" class="form-control" id="nombre" placeholder="Nombre" formControlName="nombre">
+                <label for="floatingInput">Nombre</label>
+                <small
+                    *ngIf="registerPacienteForm.get('nombre')?.touched && registerPacienteForm.get('nombre')?.errors?.['required']"
+                    class="invalid">El nombre es requerido.</small>
+                <small
+                    *ngIf="registerPacienteForm.get('nombre')?.touched && registerPacienteForm.get('nombre')?.errors?.['minlength']"
+                    class="invalid">El nombre tiene que ser mas largo.</small>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="form-floating mb-2">
+                <input type="name" class="form-control" id="apellido" placeholder="Apellido" formControlName="apellido">
+                <label for="floatingInput">Apellido</label>
+                <small
+                    *ngIf="registerPacienteForm.get('apellido')?.touched && registerPacienteForm.get('apellido')?.errors?.['required']"
+                    class="invalid">El apellido es requerido.</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-2">
+        <div class="col-md-4">
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control" id="edad" placeholder="Edad" formControlName="edad">
+                <label for="floatingInput">Edad</label>
+                <small
+                    *ngIf="registerPacienteForm.get('edad')?.touched && registerPacienteForm.get('edad')?.errors?.['required']"
+                    class="invalid">La edad es requerida.</small>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control" id="dni" placeholder="Dni" formControlName="dni">
+                <label for="floatingInput">Dni</label>
+                <small
+                    *ngIf="registerPacienteForm.get('dni')?.touched && registerPacienteForm.get('dni')?.errors?.['required']"
+                    class="invalid">El DNI es requerido.</small>
+            </div>
+        </div>
+    </div>
+    <div class="form-floating mb-2">
+        <input type="name" class="form-control" id="obraSocial" placeholder="Obra Social" formControlName="obraSocial">
+        <label for="floatingInput">Obra Social</label>
+        <small
+            *ngIf="registerPacienteForm.get('obraSocial')?.touched && registerPacienteForm.get('obraSocial')?.errors?.['required']"
+            class="invalid">La Obra Social es requerida.</small>
+    </div>
+    <div class="form-floating mb-2">
+        <input type="email" class="form-control" id="email" placeholder="name@example.com" formControlName="email">
+        <label for="floatingInput">Direccion Email</label>
+        <small
+            *ngIf="registerPacienteForm.get('email')?.touched && registerPacienteForm.get('email')?.errors?.['required']"
+            class="invalid">La dirreccion de correo electronico es requerida.</small>
+    </div>
+    <div class="form-floating mb-2">
+        <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
+        <label for="floatingPassword">Contraseña</label>
+        <small
+            *ngIf="registerPacienteForm.get('password')?.touched && registerPacienteForm.get('password')?.errors?.['required']"
+            class="invalid">La contraseña es requerida.</small>
+    </div>
+
+    <div class="form-group mb-2">
+        <label class='margin' for="exampleFormControlFile1">Seleccione 2 fotos para su perfil:</label>
+    </div>
+    <div class="form-group mb-2">
+        <input type="file" class="form-control-file" id="foto1" formControlName="foto1">
+        <small
+            *ngIf="registerPacienteForm.get('foto1')?.touched && registerPacienteForm.get('foto1')?.errors?.['required']"
+            class="invalid">La contraseña es requerida.</small>
+        <input type="file" class="form-control-file" id="foto2" formControlName="foto2">
+        <small
+            *ngIf="registerPacienteForm.get('foto2')?.touched && registerPacienteForm.get('foto2')?.errors?.['required']"
+            class="invalid">La contraseña es requerida.</small>
+    </div>
+    <hr class="mb-4">
+    <button [disabled]="registerPacienteForm.invalid" class="w-100 btn btn-lg btn-primary"
+        type="submit">Registrarme</button>
+
+</form>

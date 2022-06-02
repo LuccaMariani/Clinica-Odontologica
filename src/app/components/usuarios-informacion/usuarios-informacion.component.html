@@ -1,0 +1,72 @@
+<hr>
+<h2>Seccion informacion de Usuarios</h2>
+<p>Presione el boton para desplegar su tabla correspondiente</p>
+<button class="boton" (click)="selecPacientes()">Informacion Pacientes</button>
+<button class="boton" (click)="selecEspecialistas()">Informacion Especialistas</button>
+<div *ngIf="this.activarPacientes">
+    <div class="tabla table-responsive">
+        <p>Tabla Pacientes</p>
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Dni</th>
+                    <th scope="col">Obra Social</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--
+                    style="cursor: pointer;" (click)="lanzarEventoPizzaSeleccionada(pizza)"
+                -->
+                <tr *ngFor="let paciente of listaPacientes">
+                    <td>{{paciente.nombre}}</td>
+                    <td>{{paciente.apellido}}</td>
+                    <td>{{paciente.edad}}</td>
+                    <td>{{paciente.dni}}grs</td>
+                    <td>{{paciente.obraSocial}}grs</td>
+                    <td>{{paciente.email}}grs</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div *ngIf="this.activarEspecialistas">
+    <div class="table-responsive">
+        <p>Tabla Especialistas</p>
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Dni</th>
+                    <th scope="col">Especialidad</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Habilitado</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let especialista of listaEspecialistas">
+                    <td>{{especialista.nombre}}</td>
+                    <td>{{especialista.apellido}}</td>
+                    <td>{{especialista.edad}}</td>
+                    <td>{{especialista.dni}}</td>
+                    <td>{{especialista.especialidad}}</td>
+                    <td>{{especialista.email}}</td>
+                    <td style="cursor: pointer;" (click)="lanzarEventoHabilitarEspecialista(especialista)"
+                        *ngIf="especialista.habilitado; else elseBlock">SI</td>
+
+                    <ng-template #elseBlock>
+                        <td style="cursor: pointer;" (click)="lanzarEventoHabilitarEspecialista(especialista)">NO</td>
+                    </ng-template>
+                </tr>
+            </tbody>
+            <button (click)="guardarCambiosEspecialistas()">Guardar cambios de Especialistas</button>
+        </table>
+    </div>
+</div>

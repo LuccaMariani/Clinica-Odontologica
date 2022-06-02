@@ -1,0 +1,13 @@
+<div class="col-md-10 mx-auto col-lg-5 margin">
+    <div class="pregunta p-4 p-md-5 rounded-3">
+        <p>Es usted un:</p>
+        <button class="boton" (click)="selecPaciente()">Paciente</button>
+        <button class="boton" (click)="selecEspecialista()">Especialista</button>
+        <div *ngIf="this.paciente">
+            <app-register-paciente></app-register-paciente>
+        </div>
+        <div *ngIf="this.especialista">
+            <app-register-especialista></app-register-especialista>
+        </div>
+    </div>
+</div>
