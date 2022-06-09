@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { firstValueFrom } from 'rxjs';
 import { textChangeRangeIsUnchanged } from 'typescript';
 
 @Injectable({
@@ -7,7 +8,17 @@ import { textChangeRangeIsUnchanged } from 'typescript';
 })
 export class AutenticarService {
 
-  constructor(private afauth: AngularFireAuth) { }
+  private esLogeado:any;
+
+
+  constructor(private afauth: AngularFireAuth) { 
+
+
+  }
+
+  getEmail(){
+    return this.esLogeado;
+  }
 
   async login(email: string, password: string) {
     try {
@@ -27,30 +38,21 @@ export class AutenticarService {
     }
   }
 
+  async getUsuarioLogueado()
+  {
+    return await firstValueFrom(this.afauth.authState);
+  }
+  
   getUserLogged(){
     return this.afauth.authState;
   }
 
-/*
-  getUsuario(){
-    return this.afauth.currentUser;
-  }*/
-
-  getMail()
+  setEmail()
   {
-    console.log('ACAA',this.afauth.idToken);
-    
-    let respuesta = undefined;
     this.getUserLogged().subscribe(res=>{
-
-      console.log('ACAA', res?.email)
-
-      respuesta = res?.email;
+      this.esLogeado = res?.email;
     })
-
-    return respuesta;
   }
-
 
   logout(){
     this.afauth.signOut();

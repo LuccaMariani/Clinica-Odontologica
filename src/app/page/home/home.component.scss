@@ -1,7 +1,36 @@
-.col{
-    width: 30%;
+.parent {
+    align-content: center;
+    align-self: center;
+    justify-self: center;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: 0.5fr,2fr,0.5fr; 
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+    padding-top: 3rem;
+   
 }
 
+    .div1 { grid-area: 1 / 1 / 2 / 2; justify-content: center; justify-self: right;}
+    .div2 { grid-area: 1 / 2 / 2 / 3; }
+    .div3 { grid-area: 1 / 3 / 2 / 4; }
+
 a {
+    background-color: #00EED1;
     margin: 5px;
+    font-weight:700;
+    border-width: 0px;
+    border-color: black;
+    border-radius: 0.3rem;
+    color: whitesmoke;
 }
+
+form {
+    justify-self: center;
+    flex-wrap: wrap;
+    width: 300px;
+    justify-content: center;justify-self: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+

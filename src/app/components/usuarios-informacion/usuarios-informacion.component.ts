@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Paciente } from 'src/app/class/paciente';
 import { Especialista } from 'src/app/class/especialista';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { Administrador } from 'src/app/class/administrador';
 
 @Component({
   selector: 'app-usuarios-informacion',
@@ -16,6 +17,7 @@ export class UsuariosInformacionComponent implements OnInit {
 
   public listaPacientes?:Paciente[];
   public listaEspecialistas?:Especialista[];
+  private listaAdministrador?:Administrador[];
 
   constructor(private usuariosService: UsuariosService, ) { 
     this.activarEspecialistas = false;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore,   } from '@angular/fire/compat/firestore';
+import { AngularFirestore, } from '@angular/fire/compat/firestore';
 
 import { Paciente } from '../class/paciente';
 import { Especialista } from '../class/especialista';
@@ -13,10 +13,11 @@ export class UsuariosService {
   private rutaPaciente = 'paciente';
   private rutaEspecialista = 'especialista';
   private rutaAdmin = 'administradores'
-  constructor(private firestore: AngularFirestore) {
 
+  constructor(private firestore: AngularFirestore) {
   }
-//-- PACIENTES --------------------------------------
+
+  //-- PACIENTES --------------------------------------
   getPacientes() {
     let collection = this.firestore.collection<any>(this.rutaPaciente)
     return collection.valueChanges();
@@ -38,14 +39,14 @@ export class UsuariosService {
     });
   }
 
-//-- ESPECIALISTAS --------------------------------------
+  //-- ESPECIALISTAS --------------------------------------
   getEspecialistas() {
     let collection = this.firestore.collection<any>(this.rutaEspecialista)
     return collection.valueChanges();
   }
 
-  getEspecialista(paciente: any) {
-    return this.firestore.collection(this.rutaEspecialista).doc(paciente.email).valueChanges();
+  getEspecialista(especialista: any) {
+    return this.firestore.collection(this.rutaEspecialista).doc(especialista.email).valueChanges();
   }
 
   guardarEspecialista(especialista: Especialista) {
@@ -69,17 +70,26 @@ export class UsuariosService {
     }
   }
 
-//-- ADMINISTRADORES -----------
-guardarAdmin(admin: Administrador) {
-  console.log("admin a guardar:", admin);
-  return this.firestore.collection(this.rutaAdmin).doc(admin.email).set({
-    nombre: admin.nombre,
-    apellido: admin.apellido,
-    edad: admin.edad,
-    dni: admin.dni,
-    email: admin.email,
-    habilitado: admin.habilitado
-  });
-}
+  //-- ADMINISTRADORES -----------
+  guardarAdmin(admin: Administrador) {
+    console.log("admin a guardar:", admin);
+    return this.firestore.collection(this.rutaAdmin).doc(admin.email).set({
+      nombre: admin.nombre,
+      apellido: admin.apellido,
+      edad: admin.edad,
+      dni: admin.dni,
+      email: admin.email,
+      habilitado: admin.habilitado
+    });
+  }
+
+  getAdmin(admin: any) {
+    return this.firestore.collection(this.rutaAdmin).doc(admin.email).valueChanges();
+  }
+
+  getAdmins() {
+    let collection = this.firestore.collection<any>(this.rutaAdmin)
+    return collection.valueChanges();
+  }
 
 }

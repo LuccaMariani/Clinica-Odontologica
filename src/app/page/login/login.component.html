@@ -1,33 +1,45 @@
-
 <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-    <div class="row align-items-center g-lg-5 py-5">
-      <div class="col-lg-7 text-center text-lg-start">
-        <h1 class="display-4 fw-bold lh-1 mb-3">Clinica Mariani</h1>
-        <p class="col-lg-10 fs-4">Agregando cuidado a su vida.</p>
-      </div>
+  <div class="row align-items-center g-lg-5 py-5">
+    <div class="col-lg-7 text-center text-lg-start">
+      <h1 class="display-4 fw-bold lh-1 mb-3">Clinica Mariani</h1>
+      <p class="col-lg-10 fs-4">Agregando cuidado a su vida.</p>
+    </div>
 
-      
-      <div class="col-md-10 mx-auto col-lg-5">
-        <form class="p-4 p-md-5 border rounded-3 bg-light">
-          <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Email address</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
-          </div>
+    <form class="col-md-10 mx-auto col-lg-5" (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <div class="p-4 p-md-5 border rounded-3 bg-light">
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="email" placeholder="ejemplo@gmail.com" formControlName="email">
+          <label for="email">Email address</label>
+          <small *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']"
+            class="invalid">El email es requerido.</small>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" id="password" placeholder="Contraseña" formControlName="password">
+          <label for="password">Password</label>
+          <small *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']"
+            class="invalid">La contraseña es requerida.</small>
+        </div>
+        <!--
           <div class="checkbox mb-3">
             <label>
               <input type="checkbox" value="remember-me"> Remember me
             </label>
           </div>
-          <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
-          <hr class="my-4">
-          <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
-        </form>
+          -->
+        <button class="w-100 btn btn-lg btn-primary" [disabled]="loginForm.invalid" type="submit">Iniciar
+          Sesion</button>
+        <hr class="my-4">
+        <!--
+        <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
+        -->
       </div>
+    </form>
 
 
-    </div>
   </div>
+
+
+    <app-home-listado-usuarios></app-home-listado-usuarios>
+
+
+</div>
