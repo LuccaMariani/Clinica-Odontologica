@@ -1,27 +1,25 @@
 # ClinicaMariani
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.1.
+Pagina web: https://clinica-odontologica-mariani.web.app/
 
-## Development server
+## HOME - Pagina de inicio
+![image](https://user-images.githubusercontent.com/68014407/174159425-e87b2405-4bb3-44f0-a9b4-f981b83f8382.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Login - Inciar Sesion
+![image](https://user-images.githubusercontent.com/68014407/174159672-c06788a7-9c66-4cf3-adaf-7ad9ab92bca8.png)
 
-## Code scaffolding
+## REGISTRO - Registrarte como un nuevo Usurio
+Primeramente se elije con que tipo de usuario se quiere registrar.
+![image](https://user-images.githubusercontent.com/68014407/174160930-e31fbdb2-cdf0-48f4-bcae-685f08ca753f.png)
+Una vez seleccionado, le aparece en formulario correspondiente a su tipo de usuario.
+![image](https://user-images.githubusercontent.com/68014407/174160994-07e1b859-1b3f-4d8c-ba13-d6efbf918603.png)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## USUARIOS - Listado de Usuarios y Registros
+En esta seccion a la cual solo pueden acceder los adminsitradores. Se pueden ahcer 2 cosas: 
+- Listar los distintos tipos de usuarios
+- Dar de alta usuarios ( Pacientes, Especialistas y Administradores )
+![image](https://user-images.githubusercontent.com/68014407/174161345-32e7f4a5-742e-47ef-89a7-d22946a41cf5.png)
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Iconos utilizados
+https://icons8.com/icons/authors/8QOXCQo1Mzn1/victoruler/external-victoruler-linear-colour-victoruler
