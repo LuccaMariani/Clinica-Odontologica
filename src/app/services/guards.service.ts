@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Especialista } from 'src/app/class/especialista';
 import { AutenticarService } from 'src/app/services/autenticar.service';
@@ -14,30 +15,22 @@ enum usuario {
 }
 
 
-@Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+
+@Injectable({
+  providedIn: 'root'
 })
-export class MenuComponent implements OnInit {
+export class GuardsService {
+  userLogged = this.autenticarService.getUserLogged();
 
-
-  public userLogged = this.autenticarService.getUserLogged();
-
-  public usuarioLogueado: string = "";
+  public usuarioLogueado?: string ;
 
   private listaPacientes?: Paciente[];
   private listaEspecialistas?: Especialista[];
   private listaAdmins?: Administrador[];
 
-  constructor(private autenticarService: AutenticarService, private usuariosService: UsuariosService) {
-
-  }
-
-
-  ngOnInit(): void {
-
-    
+  constructor(private autenticarService: AutenticarService, private usuariosService: UsuariosService) { }
+  
+  activar(): void {
     this.autenticarService.getUsuarioLogueado().then((res) => {
       console.log(res?.email);
       this.usuarioLogueado = res?.email?.toString() ?? '';
@@ -47,7 +40,7 @@ export class MenuComponent implements OnInit {
     this.obtenerEspecialistas();
     this.obtenerAdmins();
 
-
+    console.log('SE ACTIVO BIEN');
   }
 
 
@@ -108,7 +101,11 @@ export class MenuComponent implements OnInit {
     console.log('usuario logeado', this.usuarioLogueado);
   }
 
-  LogOut() {
-    this.autenticarService.logout();
+  obtener(){
+    this.autenticarService.getUsuarioLogueado().then((res) => {
+      console.log(res?.email);
+      this.usuarioLogueado = res?.email?.toString() ?? '';
+    })
+
   }
 }

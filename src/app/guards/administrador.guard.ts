@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, CanDeactivate, CanLoad, Route, Rou
 import { Observable } from 'rxjs';
 import { AutenticarService } from '../services/autenticar.service';
 import { MenuComponent } from '../components/menu/menu.component';
-
+import { GuardsService } from '../services/guards.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,26 +12,14 @@ export class AdministradorGuard implements CanActivate, CanDeactivate<unknown>, 
   private esLogeado: any;
   public usuarioLogueado: string = "";
 
-  constructor(private menu:MenuComponent, private autenticarService: AutenticarService, private usuariosService: AutenticarService) {
+  constructor(private guardSV:GuardsService, private menu:MenuComponent, private autenticarService: AutenticarService, private usuariosService: AutenticarService) {
   }
   
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
-
-    this.autenticarService.getUsuarioLogueado().then((res) => {
-      console.log(res?.email);
-      this.usuarioLogueado = res?.email?.toString() ?? '';
-    })
-
-    setTimeout(() => 
-    {
-      console.log('guard',this.menu.getTipoUsuario());
-    },
-    5000);
-
-    
+      console.log('guard', this.guardSV.getTipoUsuario());
 
 
     return true;

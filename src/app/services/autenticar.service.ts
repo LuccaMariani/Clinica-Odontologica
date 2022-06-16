@@ -12,13 +12,12 @@ export class AutenticarService {
 
 
   constructor(private afauth: AngularFireAuth) { 
-
-
   }
 
+  /*
   getEmail(){
     return this.esLogeado;
-  }
+  }*/
 
   async login(email: string, password: string) {
     try {

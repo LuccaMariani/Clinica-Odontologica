@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { EventEmitter, Output } from '@angular/core';
+import { UsuariosService} from 'src/app/services/usuarios.service';
+
+import { Paciente } from 'src/app/class/paciente';
+import { Especialista } from 'src/app/class/especialista';
+import { Administrador } from 'src/app/class/administrador';
 
 @Component({
   selector: 'app-home-listado-usuarios',
@@ -6,10 +12,53 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-listado-usuarios.component.scss']
 })
 export class HomeListadoUsuariosComponent implements OnInit {
+  
 
-  constructor() { }
+  @Output() datosUsuario = new EventEmitter<any>();
 
-  ngOnInit(): void {
+  public listaPacientes?:Paciente[];
+  public listaEspecialistas?:Especialista[];
+  public listaAdministrador?:Administrador[];
+
+  constructor(private usuariosService:UsuariosService) { }
+
+  obtener(){
+    console.log('holaa')
+    console.log(this.listaPacientes);
+    console.log(this.listaEspecialistas);
+    console.log(this.listaAdministrador);
   }
 
+  ngOnInit(): void {
+    this.obtenerPacientes();
+    this.obtenerEspecialistas();
+    this.obtenerAdmins();
+  }
+
+  obtenerPacientes(){
+    this.usuariosService.getPacientes().subscribe(res=>{
+      this.listaPacientes = res;
+    })
+  }
+
+  obtenerEspecialistas(){
+    this.usuariosService.getEspecialistas().subscribe(res=>{
+      this.listaEspecialistas = res;
+    })
+  }
+
+  obtenerAdmins(){
+    this.usuariosService.getAdmins().subscribe(res=>{
+      this.listaAdministrador = res;
+    })
+  }
+
+  selecUsuario(mail:string, password:string) {
+    let usuario = {
+      mail: mail,
+      password: password
+    }
+    this.datosUsuario.emit(usuario);
+
+  }
 }

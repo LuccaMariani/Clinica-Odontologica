@@ -69,11 +69,11 @@
         <label class='margin' for="exampleFormControlFile1">Seleccione 2 fotos para su perfil:</label>
     </div>
     <div class="form-group mb-2">
-        <input type="file" class="form-control-file" id="foto1" formControlName="foto1">
+        <input type="file" class="form-control-file" id="foto1" formControlName="foto1" (change)="subirFoto1($event)">
         <small
             *ngIf="registerPacienteForm.get('foto1')?.touched && registerPacienteForm.get('foto1')?.errors?.['required']"
             class="invalid">La contraseña es requerida.</small>
-        <input type="file" class="form-control-file" id="foto2" formControlName="foto2">
+        <input type="file" class="form-control-file" id="foto2" formControlName="foto2" (change)="subirFoto2($event)"> 
         <small
             *ngIf="registerPacienteForm.get('foto2')?.touched && registerPacienteForm.get('foto2')?.errors?.['required']"
             class="invalid">La contraseña es requerida.</small>

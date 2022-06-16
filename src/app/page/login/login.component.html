@@ -6,16 +6,18 @@
     </div>
 
     <form class="col-md-10 mx-auto col-lg-5" (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-      <div class="p-4 p-md-5 border rounded-3 bg-light">
+      <div class="sombra p-4 p-md-5 border rounded-3 bg-light">
         <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="email" placeholder="ejemplo@gmail.com" formControlName="email">
-          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" placeholder="ejemplo@gmail.com" formControlName="email"
+            required>
+          <label for="email">Correo Electronico</label>
           <small *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']"
             class="invalid">El email es requerido.</small>
         </div>
         <div class="form-floating mb-3">
-          <input type="password" class="form-control" id="password" placeholder="Contraseña" formControlName="password">
-          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Contraseña" formControlName="password"
+            required>
+          <label for="password">Contraseña</label>
           <small *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']"
             class="invalid">La contraseña es requerida.</small>
         </div>
@@ -28,7 +30,7 @@
           -->
         <button class="w-100 btn btn-lg btn-primary" [disabled]="loginForm.invalid" type="submit">Iniciar
           Sesion</button>
-        <hr class="my-4">
+
         <!--
         <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
         -->
@@ -39,7 +41,7 @@
   </div>
 
 
-    <app-home-listado-usuarios></app-home-listado-usuarios>
+  <app-home-listado-usuarios (datosUsuario)="parametrosUsuario($event)"></app-home-listado-usuarios>
 
 
 </div>

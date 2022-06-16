@@ -6,6 +6,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideStorage } from '@angular/fire/storage';
 import { provideFirebaseApp } from '@angular/fire/app';
+import { StorageModule } from '@angular/fire/storage';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,6 +36,7 @@ import { MisTurnosComponent } from './page/mis-turnos/mis-turnos.component';
 import { SolicitarTurnoComponent } from './page/solicitar-turno/solicitar-turno.component';
 import { MiPerfilComponent } from './page/mi-perfil/mi-perfil.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,19 +54,24 @@ import { MiPerfilComponent } from './page/mi-perfil/mi-perfil.component';
     HomeListadoUsuariosComponent,
     MisTurnosComponent,
     SolicitarTurnoComponent,
-    MiPerfilComponent
+    MiPerfilComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    
     AngularFireModule.initializeApp(environment.firebaseConfig),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     FormsModule,
     ReactiveFormsModule,
+    StorageModule,
     NgbModule
   ],
   providers: [
+    StorageModule,
     MenuComponent
   ],
   bootstrap: [AppComponent]

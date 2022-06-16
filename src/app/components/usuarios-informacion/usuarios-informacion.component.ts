@@ -42,7 +42,7 @@ export class UsuariosInformacionComponent implements OnInit {
   }
 
   lanzarEventoHabilitarEspecialista(especialista:Especialista){
-    
+    console.log('foto1', especialista.foto1)
     this.listaEspecialistas?.forEach(esp =>  {
       if(esp.email == especialista.email && esp.habilitado){
         esp.habilitado = false;

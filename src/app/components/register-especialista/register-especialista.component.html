@@ -95,12 +95,15 @@
     <div class="form-group mb-2">
         <label class='plus'>Seleccione 2 fotos para su perfil:</label>
     </div>
-    <!--
+    
         <div class="form-group mb-2">
-            <input type="file" class="form-control-file" id="exampleFormControlFile1">
-            <input type="file" class="form-control-file margin" id="exampleFormControlFile2">
+            <input type="file" class="form-control-file" id="foto1" formControlName="foto1" placeholder="Seleccione una Foto" (change)="subirFoto($event)">
+        <small
+            *ngIf="registerEspecialistaForm.get('foto1')?.touched && registerEspecialistaForm.get('foto1')?.errors?.['required']"
+            class="invalid">La contraseña es requerida.</small>
+
         </div>
-        -->
+        
     <hr class="mb-4">
     <button class="w-150 btn btn-lg btn-primary" (click)="verEspecialidades()" type="button">Ver especialidades</button>
 

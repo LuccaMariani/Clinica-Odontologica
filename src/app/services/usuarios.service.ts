@@ -10,6 +10,7 @@ import { Administrador } from '../class/administrador';
 })
 export class UsuariosService {
 
+  
   private rutaPaciente = 'paciente';
   private rutaEspecialista = 'especialista';
   private rutaAdmin = 'administradores'
@@ -35,7 +36,9 @@ export class UsuariosService {
       edad: paciente.edad,
       dni: paciente.dni,
       obraSocial: paciente.obraSocial,
-      email: paciente.email
+      email: paciente.email,
+      foto1: paciente.foto1,
+      foto2: paciente.foto2
     });
   }
 
@@ -58,7 +61,8 @@ export class UsuariosService {
       dni: especialista.dni,
       especialidad: especialista.especialidad,
       email: especialista.email,
-      habilitado: especialista.habilitado
+      habilitado: especialista.habilitado,
+      foto1: especialista.foto1
     });
   }
 
@@ -79,7 +83,9 @@ export class UsuariosService {
       edad: admin.edad,
       dni: admin.dni,
       email: admin.email,
-      habilitado: admin.habilitado
+      habilitado: admin.habilitado,
+      foto1: admin.foto1
+    
     });
   }
 
@@ -92,4 +98,9 @@ export class UsuariosService {
     return collection.valueChanges();
   }
 
+
+  //GENERICOS
+  public setData(collection: string, documentId: string, data: any) {
+    return this.firestore.collection(collection).doc(documentId).set(data);
+  }
 }

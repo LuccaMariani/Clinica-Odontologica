@@ -1,1 +1,72 @@
-<p>solicitar-turno works!</p>
+<!-- TODO FIXME MARGIN -->
+<div class="col-md-10 mx-auto col-lg-5 margin">
+    <div class="fondo">
+        <div>
+            <div>
+                <h1>TURNOS</h1>
+            </div>
+
+            <div>
+                <div>
+                    <h4>
+                        ESPECIALIDAD
+                    </h4>
+                </div>
+                <div>
+                    <button *ngFor="let especialidad of obtenerEspecialidades()"
+                        (click)="seleccionarEspecialidad(especialidad)">
+                        {{especialidad.especialidad}} </button>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <h4>
+                        ESPECIALISTAS
+                    </h4>
+                </div>
+                <div>
+                    <button *ngFor="let especialista of especialistas" (click)="seleccionarEspecialista(especialista)">
+                        {{especialista.nombre}}
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <h4>
+                        Horarios Disponibles:
+                    </h4>
+                </div>
+                <div>
+                    <button *ngFor="let horarioDisponible of obtenerHorariosDisponibles()"
+                        (click)="seleccionarHorario(horarioDisponible)"> {{horarioDisponible}} </button>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <h3>
+                        Turno correspondiente:
+                    </h3>
+                </div>
+                <div>
+                    <ul>
+                        <li>
+                            Horario: {{datos?.horarioSeleccionado}}
+                        </li>
+                        <li>
+                            Especialidad: {{datos?.especialidad}}
+                        </li>
+                        <li>
+                            Especialista: {{datos?.especialista}} {{datos?.especialista}}
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <button (click)="crearTurno()"> Crear </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
