@@ -30,8 +30,8 @@ export class SolicitarTurnoComponent implements OnInit {
     horarioSeleccionado: null
   }
 
-  horariosMañana = ["08:00", "09:00", "10:00", "11:00"]
-  horariosTarde = ["14:00", "15:00", "16:00", "17:00"]
+  //horariosMañana = ["08:00", "09:00", "10:00", "11:00"]
+  //horariosTarde = ["14:00", "15:00", "16:00", "17:00"]
 
   turno?: Turno
 

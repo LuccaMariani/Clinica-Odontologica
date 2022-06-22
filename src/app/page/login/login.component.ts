@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
   private email: string;
   constructor(
     private readonly fb: FormBuilder,
-    private usuarioService: UsuariosService,
-    private auth: AutenticarService,
+    private usuariosSV: UsuariosService,
+    private autenticarSV: AutenticarService,
     private guardSV: GuardsService) {
     this.email = '';
   }
@@ -46,20 +46,25 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required]]
     })
   }
+  
   parametrosUsuario(usuario:Usuario) {
-    console.log(usuario.mail);
+    console.log(usuario.email);
     console.log(usuario.password);
-    this.loginForm.controls['email'].setValue(usuario.mail);
+    this.loginForm.controls['email'].setValue(usuario.email);
     this.loginForm.controls['password'].setValue(usuario.password);
   }
 
   Login() {
-    console.log(this.loginForm.get('email')?.value);
-    console.log(this.loginForm.get('password')?.value);
-    this.auth.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
+
+
+    this.autenticarSV.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
       .then(res => {
-        this.email = this.loginForm.get('email')?.value
-        this.guardSV.activar();
+        
+        this.autenticarSV.currentUser = this.usuariosSV.getUsuario(this.loginForm.get('email')?.value); 
+        //console.log('login usuario conseguido', this.usuariosSV.getUsuario(this.loginForm.get('email')?.value))
+        
+        this.email = this.loginForm.get('email')?.value;
+
       })
   }
 

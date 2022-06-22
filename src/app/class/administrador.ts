@@ -7,9 +7,11 @@ export class Administrador {
     public email: string;
     public habilitado: boolean;
     public foto1: string;
+    public tipo: string;
     
     constructor(nombre: string = '', apellido: string = '', edad: number = 0, dni: number = 0,
-     email: string = '', habilitado: boolean = false, foto1: string = 'sinFoto') {
+     email: string = '', habilitado: boolean = false, foto1: string = 'sinFoto',
+     tipo:string = 'administrador') {
 
         this.nombre = nombre;
         this.apellido = apellido;
@@ -18,5 +20,6 @@ export class Administrador {
         this.email = email;
         this.habilitado = habilitado;
         this.foto1 = foto1;
+        this.tipo = tipo;
     }
 }

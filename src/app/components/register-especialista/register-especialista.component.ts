@@ -29,12 +29,11 @@ export class Especialidades {
 })
 export class RegisterEspecialistaComponent implements OnInit {
 
-  public especialidades: any[] = [
-  ];
+  public especialidades: any[] = [];
 
-  registerEspecialistaForm!: FormGroup;
+  public registerEspecialistaForm!: FormGroup;
 
-  foto: any;
+  public foto: any;
 
   constructor(
     private readonly fb: FormBuilder,

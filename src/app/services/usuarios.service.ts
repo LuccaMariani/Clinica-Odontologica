@@ -10,7 +10,7 @@ import { Administrador } from '../class/administrador';
 })
 export class UsuariosService {
 
-  
+
   private rutaPaciente = 'paciente';
   private rutaEspecialista = 'especialista';
   private rutaAdmin = 'administradores'
@@ -85,7 +85,7 @@ export class UsuariosService {
       email: admin.email,
       habilitado: admin.habilitado,
       foto1: admin.foto1
-    
+
     });
   }
 
@@ -100,7 +100,60 @@ export class UsuariosService {
 
 
   //GENERICOS
-  public setData(collection: string, documentId: string, data: any) {
+  public setDocumentoGenerico(collection: string, documentId: string, data: any) {
     return this.firestore.collection(collection).doc(documentId).set(data);
   }
+
+  public getUsuarios() {
+
+    return
+  }
+
+  public getUsuario(email: string) {
+    /*
+        let admins = this.firestore.collection<any>(this.rutaAdmin)
+        let especialsitas = this.firestore.collection<any>(this.rutaEspecialista)
+        let pacientes = this.firestore.collection<any>(this.rutaPaciente)
+    
+        admins.add(especialsitas);
+        admins.add(pacientes);
+    
+        return admins.doc(email).valueChanges(); */
+  }
+
+
+  /*
+
+  getTipoUsuario(): usuario {
+    let tipoUsuario: usuario = usuario.desconocido;
+
+    this.listaAdmins?.forEach(admin => {
+      console.log('casi entro admins', admin.email);
+      if (admin.email == this.usuarioLogueado) {
+        console.log('entro admins');
+        tipoUsuario = usuario.admin;
+      }
+    });
+
+    if (tipoUsuario == usuario.desconocido) {
+      this.listaEspecialistas?.forEach(espe => {
+        console.log('casi entro especialsitas', espe.email);
+        if (espe.email == this.usuarioLogueado) {
+          console.log('entro especialsitas');
+          tipoUsuario = usuario.especialista;
+        }
+      });
+      if (tipoUsuario == usuario.desconocido) {
+        this.listaPacientes?.forEach(paci => {
+          console.log('casi entro pacientes', paci.email);
+          if (paci.email == this.usuarioLogueado) {
+            console.log('entro pacientes');
+            tipoUsuario = usuario.paciente;
+          }
+        });
+      }
+    }
+
+    return tipoUsuario;
+  }*/
 }

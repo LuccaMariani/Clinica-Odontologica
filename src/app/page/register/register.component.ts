@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { MenuComponent } from 'src/app/components/menu/menu.component';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -9,8 +9,10 @@ export class RegisterComponent implements OnInit {
 
   public paciente:boolean;
   public especialista:boolean;
+  private menu:MenuComponent;
   
-  constructor() { 
+  constructor(private menuC:MenuComponent) { 
+    this.menu = menuC;
     this.especialista = false;
     this.paciente = false;
   }

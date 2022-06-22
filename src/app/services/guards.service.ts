@@ -7,7 +7,7 @@ import { Paciente } from 'src/app/class/paciente';
 import { Administrador } from 'src/app/class/administrador';
 
 
-enum usuario {
+enum tiposUsuarios {
   paciente = 'paciente',
   especialista = 'especialista',
   admin = 'admin',
@@ -22,15 +22,16 @@ enum usuario {
 export class GuardsService {
   userLogged = this.autenticarService.getUserLogged();
 
-  public usuarioLogueado?: string ;
+  public usuarioLogueado?: string;
 
   private listaPacientes?: Paciente[];
   private listaEspecialistas?: Especialista[];
   private listaAdmins?: Administrador[];
 
   constructor(private autenticarService: AutenticarService, private usuariosService: UsuariosService) { }
-  
-  activar(): void {
+
+  activar() {
+
     this.autenticarService.getUsuarioLogueado().then((res) => {
       console.log(res?.email);
       this.usuarioLogueado = res?.email?.toString() ?? '';
@@ -62,31 +63,32 @@ export class GuardsService {
     })
   }
 
-  getTipoUsuario(): usuario {
-    let tipoUsuario: usuario = usuario.desconocido;
+  getTipoUsuario(): tiposUsuarios {
+    
+    let tipoUsuario: tiposUsuarios = tiposUsuarios.desconocido;
 
     this.listaAdmins?.forEach(admin => {
       console.log('casi entro admins', admin.email);
       if (admin.email == this.usuarioLogueado) {
         console.log('entro admins');
-        tipoUsuario = usuario.admin;
+        tipoUsuario = tiposUsuarios.admin;
       }
     });
 
-    if (tipoUsuario == usuario.desconocido) {
+    if (tipoUsuario == tiposUsuarios.desconocido) {
       this.listaEspecialistas?.forEach(espe => {
         console.log('casi entro especialsitas', espe.email);
         if (espe.email == this.usuarioLogueado) {
           console.log('entro especialsitas');
-          tipoUsuario = usuario.especialista;
+          tipoUsuario = tiposUsuarios.especialista;
         }
       });
-      if (tipoUsuario == usuario.desconocido) {
+      if (tipoUsuario == tiposUsuarios.desconocido) {
         this.listaPacientes?.forEach(paci => {
           console.log('casi entro pacientes', paci.email);
           if (paci.email == this.usuarioLogueado) {
             console.log('entro pacientes');
-            tipoUsuario = usuario.paciente;
+            tipoUsuario = tiposUsuarios.paciente;
           }
         });
       }
@@ -101,7 +103,7 @@ export class GuardsService {
     console.log('usuario logeado', this.usuarioLogueado);
   }
 
-  obtener(){
+  obtener() {
     this.autenticarService.getUsuarioLogueado().then((res) => {
       console.log(res?.email);
       this.usuarioLogueado = res?.email?.toString() ?? '';

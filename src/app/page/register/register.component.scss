@@ -4,11 +4,24 @@
 .pregunta{
     background-color:  rgb(199, 255, 248);   
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    
 }
 .boton {
+    min-width: 110px;
+    justify-self: center;
     margin: 2px;
+    padding: 10px;
+    border-radius: 15px;
+    border-width: 2px; 
+    border-color: #00ACEA;
+    background-color: rgb(255, 255, 255);
 }
 
 .margin {
     margin-top: 10px;
+    
+}
+
+h5{
+    color:  #006E96;
 }

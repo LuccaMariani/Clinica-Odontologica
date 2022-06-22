@@ -72,6 +72,12 @@
     </div>
     <div class="form-group">
         <label class='margin' for="especialidad">Seleccione su especialidad, o elija crear una nueva:</label>
+        
+            <br>
+        <div class='especialidades' *ngFor="let especialidad of especialidades">
+            <button type="button">{{especialidad.especialidad}}</button>
+        </div>
+    
         <select class="form-select" id="especialidad" formControlName="especialidad">
             <option *ngFor="let especialidad of especialidades">
                 {{especialidad.especialidad}}</option>

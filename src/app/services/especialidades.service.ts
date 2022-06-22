@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore,   } from '@angular/fire/compat/firestore';
+import { AngularFirestore, } from '@angular/fire/compat/firestore';
 
 import { Paciente } from '../class/paciente';
 import { Especialista } from '../class/especialista';

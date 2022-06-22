@@ -10,30 +10,27 @@ export class HorariosService {
 
   horarioCollectionReference: any;
   horarios: Observable<Horario>;
-  horariosArray : any = []; 
+  horariosArray: any = [];
 
-  constructor(private angularF : AngularFirestore) {
+  constructor(private angularF: AngularFirestore) {
     this.horarioCollectionReference = this.angularF.collection<Horario>('horarios');
-    this.horarios = this.horarioCollectionReference.valueChanges({idField : 'id'});
+    this.horarios = this.horarioCollectionReference.valueChanges({ idField: 'id' });
 
-    this.traerHorarios().subscribe(value =>{
+    this.traerHorarios().subscribe(value => {
       this.horariosArray = value;
     });
 
-   }
-   traerHorarios()
-   {
-     return this.horarios;
-   }
- 
-   agregarHorario(horario : Horario)
-   {
-     return this.horarioCollectionReference.add({...horario})
-   }
- 
-   modificarHorario(horario : any, id : any)
-   {
-     return this.angularF.collection('horarios').doc(id).update({...horario});
-   }
+  }
+  traerHorarios() {
+    return this.horarios;
+  }
+
+  agregarHorario(horario: Horario) {
+    return this.horarioCollectionReference.add({ ...horario })
+  }
+
+  modificarHorario(horario: any, id: any) {
+    return this.angularF.collection('horarios').doc(id).update({ ...horario });
+  }
 
 }

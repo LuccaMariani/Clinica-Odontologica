@@ -53,9 +53,10 @@ export class HomeListadoUsuariosComponent implements OnInit {
     })
   }
 
-  selecUsuario(mail:string, password:string) {
+  selecUsuario(email:string, password:string) {
+    console.log("slecUsuario()", email, password);
     let usuario = {
-      mail: mail,
+      email: email,
       password: password
     }
     this.datosUsuario.emit(usuario);
