@@ -1,9 +1,9 @@
 export interface Turno {
     id: string
-    fecha: Date;
+    fecha: string;
     especialidadNombre: string;
     pacienteMail: string;
-    especialistMail: string;
+    especialistaMail: string;
     estado: EstadoTurno;
     comentario: string;
     encuesta: any;

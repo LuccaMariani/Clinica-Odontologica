@@ -35,6 +35,8 @@ import { HomeListadoUsuariosComponent } from './components/home-listado-usuarios
 import { MisTurnosComponent } from './page/mis-turnos/mis-turnos.component';
 import { SolicitarTurnoComponent } from './page/solicitar-turno/solicitar-turno.component';
 import { MiPerfilComponent } from './page/mi-perfil/mi-perfil.component';
+import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis-turnos-paciente.component';
+import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especialista/mis-turnos-especialista.component';
 
 
 @NgModule({
@@ -55,6 +57,8 @@ import { MiPerfilComponent } from './page/mi-perfil/mi-perfil.component';
     MisTurnosComponent,
     SolicitarTurnoComponent,
     MiPerfilComponent,
+    MisTurnosPacienteComponent,
+    MisTurnosEspecialistaComponent,
     
   ],
   imports: [

@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Turno } from 'src/app/interface/turno';
+import { EstadoTurno, Turno } from 'src/app/interface/turno';
+
 import { TurnosService } from 'src/app/services/turnos.service';
 import { EspecialdadesService } from 'src/app/services/especialidades.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { AutenticarService } from 'src/app/services/autenticar.service';
 //import { FirebaseService } from '../servicios/firebase.service';
 import { HorariosService } from 'src/app/services/horarios.service';
 import { Especialidades } from 'src/app/components/register-especialista/register-especialista.component';
 import { Especialista } from 'src/app/class/especialista';
+import { Paciente } from 'src/app/class/paciente';
+import { Administrador } from 'src/app/class/administrador';
+import { tipoUsuario } from 'src/app/interface/usuario';
+import { ThisReceiver } from '@angular/compiler';
+import { Especialidad } from 'src/app/interface/especialidad';
 
 @Component({
   selector: 'app-solicitar-turno',
@@ -17,10 +24,31 @@ import { Especialista } from 'src/app/class/especialista';
 export class SolicitarTurnoComponent implements OnInit {
 
   public especialidades: any
-  public especialistas?:Especialista[];
-  
+  public especialistas?: Especialista[];
+
   public turnos: any
   public horarios: any
+
+  public usuario: any;
+  public tipoUsuario?: tipoUsuario;
+
+  public listaPacientes?: Paciente[];
+  public listaEspecialistas?: Especialista[];
+  public listaAdministrador?: Administrador[];
+  public listaTurnos?: Turno[];
+  public listaEspecialidades?: any[];
+
+
+  public turno: Turno = {
+    id: '',
+    fecha: '',
+    especialidadNombre: '',
+    pacienteMail: '',
+    especialistaMail: '',
+    estado: EstadoTurno.Pendiente,
+    comentario: '',
+    encuesta: '',
+  }
 
   datos = {
     especialidad: null,
@@ -33,105 +61,101 @@ export class SolicitarTurnoComponent implements OnInit {
   //horariosMañana = ["08:00", "09:00", "10:00", "11:00"]
   //horariosTarde = ["14:00", "15:00", "16:00", "17:00"]
 
-  turno?: Turno
+  
 
   constructor(
-    private usuariosService: UsuariosService,
-    private especialidadesService: EspecialdadesService,
+    private usuariosSV: UsuariosService,
+    private autenticarSV: AutenticarService,
+    private especialidadesSV: EspecialdadesService,
     private turnoService: TurnosService,
     private horarioService: HorariosService) {
-
-    especialidadesService.getEspecialidades().subscribe( esp => {
-      this.especialidades = esp
-    })
-
-    this.usuariosService.getEspecialistas().subscribe(x => {
-      this.especialistas = x
-    })
-
-    turnoService.turnos.subscribe(x => {
-      this.turnos = x
-    })
-
-    horarioService.traerHorarios().subscribe(x => {
-      this.horarios = x
-    })
-
   }
 
   ngOnInit(): void {
+    this.obtenerDatosUsuario();
+    this.obtenerDatos();
   }
 
   obtenerEspecialidades() {
-    return this.especialidades
+    return this.listaEspecialidades
+  }
+  seleccionarEspecialidad(especialidad: Especialidad) {
+    //this.datos.especialidad = especialidad.valor
+
   }
 
-  obtenerHorariosDisponibles() {
-    if(this.datos.especialista == null){
-      return []
-    }
-    //let hor = this.horarios.filter((x: { especialistaId: any; }) => x.especialistaId == this.datos.especialista?.uid)
-    let horariosDisponibles = []
-    horariosDisponibles.push("08:00")
-    /*
-    if (hor) {
-      hor = hor[0]
-      let turnosEspecialista = this.turnos.filter((x: { especialistaId: any; }) => x.especialistaId == this.datos.especialista?.uid)
+  obtenerEspecialistas(){
 
-      if(turnosEspecialista.find((x: { fecha: { nanoseconds: string | number | Date; }; }) => (new Date(x.fecha.nanoseconds).getHours() % 12  || 12) == 8) == null){
-        horariosDisponibles.push("08:00")
-      }
-      if(turnosEspecialista.find((x: { fecha: { nanoseconds: string | number | Date; }; }) => (new Date(x.fecha.nanoseconds).getHours() % 12  || 12) == 9) == null){
-        horariosDisponibles.push("09:00")
-      }
-      if(turnosEspecialista.find((x: { fecha: { nanoseconds: string | number | Date; }; }) => (new Date(x.fecha.nanoseconds).getHours() % 12  || 12) == 10) == null){
-        horariosDisponibles.push("10:00")
-      }
-      if(turnosEspecialista.find((x: { fecha: { nanoseconds: string | number | Date; }; }) => (new Date(x.fecha.nanoseconds).getHours() % 12  || 12) == 11) == null){
-        horariosDisponibles.push("11:00")
-      }
-    }*/
-    return horariosDisponibles
+    return this.listaEspecialidades
+  }
+
+  seleccionarEspecialista(especialista: Especialista){
+
+  }
+
+  horariosDisponibles(){
+    return ''
+  }
+
+  seleccionarHorario(horarioDisponible:any){
+
+  }
+
+  crearTurno(){
+
   }
 
 
 
-  obtenerTurnosEspecialista(especialistaId: string) {
-    return this.turnos.filter((x: { especialistaId: string; }) => x.especialistaId == especialistaId).map((x: { fecha: any; }) => x.fecha)
+
+
+
+
+  obtenerDatosUsuario() {
+    this.autenticarSV.getUserLogged().subscribe(userLogged => {
+      this.usuariosSV.getPacientes().subscribe(i => {
+        i.forEach(user => {
+          console.log('buscando pacientes...')
+          if (user.email == userLogged?.email) {
+            console.log('paciente encontrado')
+            this.usuario = user
+          }
+        })
+      })
+
+      this.usuariosSV.getAdmins().subscribe(i => {
+        i.forEach(user => {
+          console.log('buscando pacientes...')
+          if (user.email == userLogged?.email) {
+            console.log('paciente encontrado')
+            this.usuario = user
+          }
+        })
+      })
+    })
   }
 
-  obtenerFechaFormateada(time: { nanoseconds: string | number | Date; }) {
-    return new Date(time.nanoseconds)
+
+  obtenerDatos() {
+    this.usuariosSV.getPacientes().subscribe(res => {
+      this.listaPacientes = res;
+    })
+
+    this.usuariosSV.getAdmins().subscribe(res => {
+      this.listaAdministrador = res;
+    })
+
+    this.usuariosSV.getEspecialistas().subscribe(res => {
+      this.listaEspecialistas = res;
+    })
+
+    this.turnoService.getTurnos().subscribe(res => {
+      this.listaTurnos = res;
+    })
+
+    this.especialidadesSV.getEspecialidades().subscribe(res => {
+      this.listaEspecialidades = res;
+    })
   }
 
-  seleccionarEspecialidad(especialidad: any) {
-    console.log(especialidad);
-    this.datos.especialidad = especialidad
-  }
-
-  seleccionarEspecialista(especialista: any) {
-    console.log(especialista);
-    this.datos.especialista = especialista
-  }
-
-  seleccionarHorario(horario: any) {
-    this.datos.horarioSeleccionado = horario
-  }
-
-  crearTurno() {
-    /*
-    let partesHorario = this.datos.horarioSeleccionado.split(":")
-    let date = new Date()
-    date.setHours(partesHorario[0], partesHorario[1], 0)
-    let turno = new Turno()
-    turno.fecha = date
-    turno.pacienteId = this.firebaseService.usuarioLogueado.id
-    turno.estado = "Nuevo"
-    turno.especialistaId = this.datos.especialista.uid
-    turno.nombreEspecialidad = this.datos.especialidad
-
-    this.turnoService.agregarTurno(turno)
-    alert("Creado")
-    */
-  }
 }

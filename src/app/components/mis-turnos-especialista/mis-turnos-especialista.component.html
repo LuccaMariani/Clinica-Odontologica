@@ -1,0 +1,41 @@
+<p>mis-turnos-especilsita works!</p><!--
+
+
+
+        <table  *ngIf="true"  >
+            <thead>
+              <tr>
+                <th scope="col">Nombre:</th>
+                <th scope="col">Apellido:</th>
+                <th  scope="col">Perfil:</th>  
+                <th  scope="col">Opcion </th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let especialistA of listaEspeciaistas" >
+              <tr>
+                <td>{{especialistA?.nombre}}</td>
+                <td>{{especialistA?.apellido}}</td>
+                <td>{{especialistA?.tipoUsuario}}</td>
+                <td><button  style="margin: 10px;color: white; " type="button" class="btnAzul" (click)="ver()" > Elegir Especialista </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+  
+          <div  *ngIf="true">
+            <div class="d-flex flex-column justify-content-center align-items-center" style="background-color: pink; border-radius: 5px;">
+              <h5>Especialidades🩺</h5>
+            </div>
+            <br>
+      
+              <div class="divider text-center"></div>
+              <div style="display: flex; justify-content:space-around; flex-wrap: wrap; ">
+                <div *ngFor="let especialidad of listaEspedialidades" class="shadow cardInfo2"  style="border: solid 2px #223A66; list-style: none; border-radius: 10px;">
+                    <ul style="list-style: none; display: flex; justify-content: center; flex-direction: column; align-items: center;">
+                      <li>Especialidad: {{especialidad?.especialidad}}</li>
+                      <li><button style="margin: 10px;color: black; " type="button" class="btnRegistro" (click)="seleccionarEspecialidadParaFiltrar(especialidad)" >Elegir</button></li>
+                    </ul>
+                </div>
+              </div>
+          </div>
+-->

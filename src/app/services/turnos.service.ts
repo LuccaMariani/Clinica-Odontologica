@@ -11,31 +11,48 @@ import { Turno } from '../interface/turno';
 })
 export class TurnosService {
 
-  turnoCollectionReference: any;
-  turnos: Observable<Turno>;
-  turnosArray : any = [];
+  private rutaTurnos = 'turnos'
+  constructor(private firestore: AngularFirestore) {
 
-  constructor(private firestore:AngularFirestore) { 
-    this.turnoCollectionReference = this.firestore.collection('turnos');
-    this.turnos = this.turnoCollectionReference.valueChanges({idField : 'id'});
-    this.getTurnos().subscribe(turnos =>{
-      this.turnosArray = turnos;
-    });
-   }
+  }
+
+  getTurnos() {
+    let collection = this.firestore.collection<any>(this.rutaTurnos)
+    return collection.valueChanges();
+  }
+
   
-   // Cambiar cosas
-   getTurnos()
-   {
-     return this.turnos;
+  getTurno(turno: Turno) {
+    return this.firestore.collection(this.rutaTurnos).doc(turno.id).valueChanges();
+  }
+
+  guardarTurno(turno: Turno) {
+    console.log("turno a guardar:", turno);
+    return this.firestore.collection(this.rutaTurnos).doc(turno.id).set(turno);
+  }
+
+  modificarTurno(turno: Turno) {
+    return this.firestore.collection('turnos').doc(turno.id).update(turno);
+  }
+
+  /*
+   export interface Turno {
+     id: string
+     fecha: Date;
+     especialidadNombre: string;
+     pacienteMail: string;
+     especialistMail: string;
+     estado: EstadoTurno;
+     comentario: string;
+     encuesta: any;
    }
- 
-   agregarTurno(turno : Turno)
-   {
-     return this.turnoCollectionReference.add({...turno});
+   export enum EstadoTurno {
+       Pendiente = 'Pendiente',
+       Cancelado = 'Cancelado',
+       Rechazado = 'Rechazado',
+       Aceptado = 'Aceptado',
+       Realizado = 'Realizado',
    }
- 
-   modificarTurno(turno : any, id : any)
-   {
-     return this.firestore.collection('turnos').doc(id).update(turno);
-   }
+
+  */
 }

@@ -3,14 +3,14 @@
     <div class="fondo">
         <div>
             <div>
-                <h1>TURNOS</h1>
+                <h3>TURNOS</h3>
             </div>
 
             <div>
                 <div>
-                    <h4>
-                        ESPECIALIDAD
-                    </h4>
+                    <h6>
+                        Seleccione una especialidad:
+                    </h6>
                 </div>
                 <div>
                     <button *ngFor="let especialidad of obtenerEspecialidades()"
@@ -20,13 +20,11 @@
             </div>
 
             <div>
+                <h6>
+                    Seleccione un especialista: 
+                </h6>
                 <div>
-                    <h4>
-                        ESPECIALISTAS
-                    </h4>
-                </div>
-                <div>
-                    <button *ngFor="let especialista of especialistas" (click)="seleccionarEspecialista(especialista)">
+                    <button *ngFor="let especialista of obtenerEspecialistas()" (click)="seleccionarEspecialista(especialista)">
                         {{especialista.nombre}}
                     </button>
                 </div>
@@ -39,7 +37,7 @@
                     </h4>
                 </div>
                 <div>
-                    <button *ngFor="let horarioDisponible of obtenerHorariosDisponibles()"
+                    <button *ngFor="let horarioDisponible of horariosDisponibles()"
                         (click)="seleccionarHorario(horarioDisponible)"> {{horarioDisponible}} </button>
                 </div>
             </div>

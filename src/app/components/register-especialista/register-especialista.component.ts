@@ -12,6 +12,7 @@ import { async } from '@angular/core/testing';
 import Swal from 'sweetalert2';
 
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Especialidad } from 'src/app/interface/especialidad';
 
 export class Especialidades {
 
@@ -29,10 +30,11 @@ export class Especialidades {
 })
 export class RegisterEspecialistaComponent implements OnInit {
 
-  public especialidades: any[] = [];
-
+  public especialidadesBase: any[] = [];
   public registerEspecialistaForm!: FormGroup;
 
+  public especialidadesSeleccionadas: Especialidad[] = [];
+  public agregarEspecialidadSeleccionado: boolean;
   public foto: any;
 
   constructor(
@@ -42,6 +44,7 @@ export class RegisterEspecialistaComponent implements OnInit {
     private especialidadService: EspecialdadesService,
     private storageService: StorageService,
     private firestorage: AngularFireStorage) {
+    this.agregarEspecialidadSeleccionado = false
 
   }
 
@@ -50,11 +53,11 @@ export class RegisterEspecialistaComponent implements OnInit {
     this.especialidadService.getEspecialidades().subscribe(res => {
       res.
         forEach(esp => {
-          this.especialidades.push(esp);
+          this.especialidadesBase.push(esp);
         })
     });
 
-    console.log(this.especialidades);
+    console.log(this.especialidadesBase);
     this.registerEspecialistaForm = this.initForm();
   }
 
@@ -63,13 +66,38 @@ export class RegisterEspecialistaComponent implements OnInit {
   }
 
   verEspecialidades() {
-
-    console.log('hola', this.especialidades);
+    console.log('seleccionadas', this.especialidadesSeleccionadas);
+    console.log('base', this.especialidadesBase);
   }
 
   onSubmit(): void {
     console.log('Form:', this.registerEspecialistaForm);
     this.Register();
+  }
+
+  onChangeEspecialidad($event: any) {
+    let especialidad: Especialidad = { nombre: $event.target.value }
+    if ($event.target.checked) {
+      this.especialidadesSeleccionadas.push(especialidad)
+    }
+    else {
+      const index = this.especialidadesSeleccionadas.indexOf(especialidad, 0);
+      if (index > -1) {
+        this.especialidadesSeleccionadas.splice(index, 1);
+      }
+      else {
+        console.log('error', $event)
+      }
+    }
+    console.log(this.especialidadesSeleccionadas);
+  }
+
+  onChangeNuevaEspecialidad($event: any) {
+    if (!this.agregarEspecialidadSeleccionado) {
+      this.agregarEspecialidadSeleccionado = $event.target.value;
+    } else {
+      this.agregarEspecialidadSeleccionado = false;
+    }
   }
 
   onChanges() {
@@ -87,7 +115,6 @@ export class RegisterEspecialistaComponent implements OnInit {
       apellido: ['', [Validators.required, Validators.minLength(3)]],
       edad: ['', [Validators.required, Validators.min(5)]],
       dni: ['', [Validators.required, Validators.min(5)]],
-      especialidad: ['', [Validators.required, Validators.minLength(3)]],
       nuevaEspecialidad: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.min(6)]],
@@ -100,10 +127,13 @@ export class RegisterEspecialistaComponent implements OnInit {
 
   Register() {
     try {
-      let especialidad = this.registerEspecialistaForm.get('especialidad')?.value;
+      let especialidades = this.especialidadesSeleccionadas;
+      let especialidadNueva: Especialidad = { nombre: '' };
 
-      if (this.registerEspecialistaForm.get('especialidad')?.value == 'Agregar una especialidad') {
-        especialidad = this.registerEspecialistaForm.get('nuevaEspecialidad')?.value;
+      if (this.agregarEspecialidadSeleccionado) {
+
+        especialidadNueva.nombre = this.registerEspecialistaForm.get('nuevaEspecialidad')?.value;
+        especialidades.push(especialidadNueva);
       }
 
       let especialista = new Especialista(
@@ -111,7 +141,7 @@ export class RegisterEspecialistaComponent implements OnInit {
         this.registerEspecialistaForm.get('apellido')?.value,
         this.registerEspecialistaForm.get('edad')?.value,
         this.registerEspecialistaForm.get('dni')?.value,
-        especialidad,
+        especialidades,
         this.registerEspecialistaForm.get('email')?.value,
         false
       );
@@ -126,13 +156,20 @@ export class RegisterEspecialistaComponent implements OnInit {
 
           task.snapshotChanges().toPromise().then(() => {
             fileRef.getDownloadURL().toPromise().then(response => {
-              console.log('respeusta que se guarda en la fot del especialista', response)
+              console.log('respuesta que se guarda en la fot del especialista', response)
               especialista.foto1 = response;
 
               if (user != null && response != null) {
                 console.log("Se registro correctamente:", user)
+
+                //se guarda el especialsita en la base
                 this.usuarioService.guardarEspecialista(especialista);
-                this.especialidadService.guardarEspecialidadEnLaLista(especialidad);
+
+                //habria que hacer ver si alguna de las especialidades no esta en la lista de especialidades, y agregarla
+                if (this.agregarEspecialidadSeleccionado) {
+
+                  this.especialidadService.guardarEspecialidadEnLaLista(especialidadNueva.nombre);
+                }
               }
               else {
                 console.log("Error:", user)

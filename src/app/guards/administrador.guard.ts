@@ -7,7 +7,7 @@ import { GuardsService } from '../services/guards.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AdministradorGuard implements CanActivate, CanDeactivate<unknown>, CanLoad {
+export class AdministradorGuard implements CanActivate, CanLoad {
 
   private esLogeado: any;
   public usuarioLogueado: string = "";
@@ -22,15 +22,6 @@ export class AdministradorGuard implements CanActivate, CanDeactivate<unknown>, 
       console.log('guard', this.guardSV.getTipoUsuario());
 
 
-    return true;
-  }
-
-
-  canDeactivate(
-    component: unknown,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return true;
   }
 

@@ -7,8 +7,7 @@
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center text-white">
                                 <div class="m-b-25">
-                                    <img src="{{usuario.foto1}}" class="img-radius"
-                                        alt="User-Profile-Image">
+                                    <img src="{{usuario.foto1}}" class="img-radius" alt="User-Profile-Image">
                                 </div>
                                 <h6 class="f-w-600">{{usuario.nombre}} {{usuario.apellido}}</h6>
                                 <p>{{usuario.tipo}}</p>
@@ -18,21 +17,76 @@
                         <div class="col-sm-8">
                             <div class="card-block">
                                 <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Sobre mi:</h6>
+
                                 <div class="row">
                                     <div class="col-md">
                                         <p class="m-b-10 f-w-600">Email</p>
                                         <h6 class="text-muted f-w-400">{{usuario.email}}</h6>
-                                        <p class="m-b-10 f-w-600">Especialidad</p>
-                                        <h6 class="text-muted f-w-400">{{usuario.especialidad}}</h6>
                                     </div>
                                     <div class="col-md">
                                         <p class="m-b-10 f-w-600">DNI</p>
                                         <h6 class="text-muted f-w-400">{{usuario.dni}}</h6>
-                                        <p class="m-b-10 f-w-600">Habilitado</p>
-                                        <h6 class="text-muted f-w-400">{{usuario.habilitado}}</h6>
                                     </div>
                                 </div>
-                               
+
+                                <div *ngIf="this.tipoUsuario == 'Especialista'">
+
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <p class="m-b-10 f-w-600">Especialidades</p>
+                                            <div *ngFor="let especialidad of usuario.especialidades">
+                                                <p class="text-muted f-w-400">{{especialidad.nombre}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <p class="m-b-10 f-w-600">Habilitado</p>
+                                            <div *ngIf="usuario.habilitado; else elseHabilitado">
+                                                <h6 class="text-muted f-w-400">Si</h6>
+                                            </div>
+                                            <ng-template #elseHabilitado>
+                                                <h6 class="text-muted f-w-400">No</h6>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <p class="m-b-10 f-w-600">Horarios Mañana</p>
+                                            <div class='especialidades' *ngFor="let horario of horariosManana">
+                                                <div class="container">
+                                                    <h5><input type="checkbox" class="form-check-input"
+                                                            [checked]="checkHorarioManana(horario)" [value]="horario"
+                                                            (change)="onChangeHorarioManana($event)" />
+                                                        {{horario}}</h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md">
+                                            <p class="m-b-10 f-w-600">Horarios Tarde</p>
+                                            <!--
+                                                <div *ngIf="usuario.horariosTarde == '' ||  usuario.horariosTarde == undefined; else elseTarde ">
+                                                -->
+                                            <div class='especialidades' *ngFor="let horario of horariosTarde">
+                                                <div class="container">
+                                                    <h5><input type="checkbox" class="form-check-input"
+                                                            [checked]="checkHorarioTarde(horario)" [value]="horario"
+                                                            (change)="onChangeHorarioTarde($event)" />
+                                                        {{horario}}</h5>
+                                                </div>
+
+                                            </div>
+                                            <!--
+                                            </div>
+                                            <ng-template #elseTarde>Content to render when condition is false.</ng-template>
+                                            -->
+                                        </div>
+                                        <button (click)="ver()">guardar mis horarios</button>
+                                    </div>
+
+                                </div>
+
                                 <!--
                                 <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
                                 <div class="row">

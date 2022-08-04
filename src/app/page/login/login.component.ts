@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
 
   public loginForm!: FormGroup;
   private email: string;
+  
   constructor(
     private readonly fb: FormBuilder,
     private usuariosSV: UsuariosService,

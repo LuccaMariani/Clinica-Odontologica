@@ -59,7 +59,7 @@ export class UsuariosService {
       apellido: especialista.apellido,
       edad: especialista.edad,
       dni: especialista.dni,
-      especialidad: especialista.especialidad,
+      especialidades: especialista.especialidades,
       email: especialista.email,
       habilitado: especialista.habilitado,
       foto1: especialista.foto1
