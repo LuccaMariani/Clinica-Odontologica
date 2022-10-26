@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire/compat';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideStorage } from '@angular/fire/storage';
 import { provideFirebaseApp } from '@angular/fire/app';
@@ -15,7 +15,7 @@ import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
 
 import { environment } from 'src/environments/environment';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 //PAGE
 import { UsuariosComponent } from './page/usuarios/usuarios.component';
@@ -59,12 +59,12 @@ import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especial
     MiPerfilComponent,
     MisTurnosPacienteComponent,
     MisTurnosEspecialistaComponent,
-    
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    
+
     AngularFireModule.initializeApp(environment.firebaseConfig),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
@@ -72,7 +72,7 @@ import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especial
     FormsModule,
     ReactiveFormsModule,
     StorageModule,
-    NgbModule
+    // NgbModule
   ],
   providers: [
     StorageModule,

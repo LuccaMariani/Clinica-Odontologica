@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UsuariosService } from 'src/app/services/usuarios.service';
-import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+//import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Paciente } from 'src/app/class/paciente';
 import { AutenticarService } from 'src/app/services/autenticar.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';

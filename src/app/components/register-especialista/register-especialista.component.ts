@@ -9,18 +9,12 @@ import { AutenticarService } from 'src/app/services/autenticar.service';
 import { EspecialdadesService } from 'src/app/services/especialidades.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { async } from '@angular/core/testing';
-import Swal from 'sweetalert2';
+//import Swal from 'sweetalert2';
 
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Especialidad } from 'src/app/interface/especialidad';
 
-export class Especialidades {
-
-  public especialidad: string;
-  constructor(especialidad: string = '') {
-    this.especialidad = especialidad;
-  }
-}
+import { Especialidades } from 'src/app/class/especialidades';
 
 
 @Component({
@@ -33,7 +27,7 @@ export class RegisterEspecialistaComponent implements OnInit {
   public especialidadesBase: any[] = [];
   public registerEspecialistaForm!: FormGroup;
 
-  public especialidadesSeleccionadas: Especialidad[] = [];
+  public especialidadesSeleccionadas: Especialidades[] = [];
   public agregarEspecialidadSeleccionado: boolean;
   public foto: any;
 
@@ -76,7 +70,8 @@ export class RegisterEspecialistaComponent implements OnInit {
   }
 
   onChangeEspecialidad($event: any) {
-    let especialidad: Especialidad = { nombre: $event.target.value }
+    console.log("1) onChangeEspecialidad >> especialidades.Seleccionadas: "+ this.especialidadesSeleccionadas);
+    let especialidad: Especialidades = new Especialidades($event.target.value)
     if ($event.target.checked) {
       this.especialidadesSeleccionadas.push(especialidad)
     }
@@ -89,21 +84,25 @@ export class RegisterEspecialistaComponent implements OnInit {
         console.log('error', $event)
       }
     }
-    console.log(this.especialidadesSeleccionadas);
+    console.log("2) onChangeEspecialidad >> especialidades.Seleccionadas: "+ this.especialidadesSeleccionadas[0],this.especialidadesSeleccionadas[1],this.especialidadesSeleccionadas[2]);
   }
 
   onChangeNuevaEspecialidad($event: any) {
+    console.log("1) onChangeNuevaEspecialidad >> agregarEspecialidadSeleccionado: " + this.agregarEspecialidadSeleccionado);
+
     if (!this.agregarEspecialidadSeleccionado) {
       this.agregarEspecialidadSeleccionado = $event.target.value;
     } else {
       this.agregarEspecialidadSeleccionado = false;
     }
+
+    console.log("2) onChangeNuevaEspecialidad >> agregarEspecialidadSeleccionado: " + this.agregarEspecialidadSeleccionado);
   }
 
   onChanges() {
-    console.log('2');
+    console.log('a');
     if (this.registerEspecialistaForm.get('especialidad')?.value == 'Agregar una especialidad') {
-      console.log('1');
+      console.log('b');
       this.registerEspecialistaForm.value.nuevaEspecialidad = '';
     }
   }
@@ -128,11 +127,11 @@ export class RegisterEspecialistaComponent implements OnInit {
   Register() {
     try {
       let especialidades = this.especialidadesSeleccionadas;
-      let especialidadNueva: Especialidad = { nombre: '' };
+      let especialidadNueva = new Especialidades('');
 
       if (this.agregarEspecialidadSeleccionado) {
 
-        especialidadNueva.nombre = this.registerEspecialistaForm.get('nuevaEspecialidad')?.value;
+        especialidadNueva.especialidad = this.registerEspecialistaForm.get('nuevaEspecialidad')?.value;
         especialidades.push(especialidadNueva);
       }
 
@@ -168,7 +167,7 @@ export class RegisterEspecialistaComponent implements OnInit {
                 //habria que hacer ver si alguna de las especialidades no esta en la lista de especialidades, y agregarla
                 if (this.agregarEspecialidadSeleccionado) {
 
-                  this.especialidadService.guardarEspecialidadEnLaLista(especialidadNueva.nombre);
+                  this.especialidadService.guardarEspecialidadEnLaLista(especialidadNueva.especialidad);
                 }
               }
               else {

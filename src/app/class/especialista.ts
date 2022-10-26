@@ -1,4 +1,5 @@
 import { Especialidad } from "../interface/especialidad";
+import { Especialidades } from "./especialidades";
 
 export class Especialista {
 
@@ -6,7 +7,7 @@ export class Especialista {
     public apellido: string;
     public edad: number;
     public dni: number;
-    public especialidades: Especialidad[];
+    public especialidades: Especialidades[];
     public email: string;
     public habilitado: boolean;
     public foto1: string;
@@ -19,7 +20,7 @@ export class Especialista {
         apellido: string = '',
         edad: number = 0,
         dni: number = 0,
-        especialidades: Especialidad[],
+        especialidades: Especialidades[],
         email: string = '',
         habilitado: boolean = false,
         foto1: string = 'sinFoto',
@@ -39,5 +40,11 @@ export class Especialista {
         this.tipo = tipo;
         this.horariosManana = horariosManana;
         this.horariosTarde = horariosTarde;
+    }
+
+
+    toString() {
+
+        return '';
     }
 }

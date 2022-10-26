@@ -8,13 +8,13 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 import { AutenticarService } from 'src/app/services/autenticar.service';
 //import { FirebaseService } from '../servicios/firebase.service';
 import { HorariosService } from 'src/app/services/horarios.service';
-import { Especialidades } from 'src/app/components/register-especialista/register-especialista.component';
 import { Especialista } from 'src/app/class/especialista';
 import { Paciente } from 'src/app/class/paciente';
 import { Administrador } from 'src/app/class/administrador';
 import { tipoUsuario } from 'src/app/interface/usuario';
 import { ThisReceiver } from '@angular/compiler';
 import { Especialidad } from 'src/app/interface/especialidad';
+import { Especialidades } from 'src/app/class/especialidades';
 
 @Component({
   selector: 'app-solicitar-turno',
@@ -104,12 +104,6 @@ export class SolicitarTurnoComponent implements OnInit {
   crearTurno(){
 
   }
-
-
-
-
-
-
 
   obtenerDatosUsuario() {
     this.autenticarSV.getUserLogged().subscribe(userLogged => {
