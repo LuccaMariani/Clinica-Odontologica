@@ -38,6 +38,8 @@
         </table>
     </div>
 </div>
+
+
 <div *ngIf="this.activarEspecialistas">
     <div class="table-responsive">
         <p>Tabla Especialistas</p>
@@ -63,7 +65,9 @@
                     <td>{{especialista.apellido}}</td>
                     <td>{{especialista.edad}}</td>
                     <td>{{especialista.dni}}</td>
-                    <td>{{especialista.especialidades}}</td>
+                    <td>
+                      <p *ngFor="let especialidades of especialista.especialidades">{{especialidades}}</p>
+                    </td>
                     <td>{{especialista.email}}</td>
                     <td style="cursor: pointer;" (click)="lanzarEventoHabilitarEspecialista(especialista)"
                         *ngIf="especialista.habilitado; else elseBlock">SI</td>

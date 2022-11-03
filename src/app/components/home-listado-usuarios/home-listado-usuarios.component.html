@@ -1,48 +1,43 @@
-
-
 <div *ngFor="let paciente of listaPacientes">
-    <div class="card">
-        <div class="row">
-            <div class="column1"><img src="{{paciente.foto1}}" /></div>
-            <div class="column2">
-                <div class="container">
-                    <p><b>{{paciente.nombre}} {{paciente.apellido}}</b> Paciente</p>
-                    <button (click)="selecUsuario(paciente.email,'123456')">Iniciar Sesion</button>
-                </div>
-            </div>
+  <div class="card">
+    <div class="row">
+      <div class="column1"><img src="{{paciente.foto1}}" class="img" (click)="selecUsuario(paciente.email,'123456')" />
+      </div>
+      <div class="column2">
+        <div class="container">
+          <p><b>{{paciente.nombre}} {{paciente.apellido}}</b> Paciente</p>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-
-
 
 
 <div *ngFor="let especialista of listaEspecialistas">
-    <div class="card">
-        <div class="row">
-            <div class="column1"><img src="{{especialista.foto1}}" /></div>
-            <div class="column2">
-                <div class="container">
-                    <p><b>{{especialista.nombre}} {{especialista.apellido}}</b> Especialista</p>
-                    <button (click)="selecUsuario(especialista.email,'123456')">Iniciar Sesion</button>
-                </div>
-            </div>
+  <div class="card">
+    <div class="row">
+      <div class="column1"><img src="{{especialista.foto1}}" class="img"
+          (click)="selecUsuario(especialista.email,'123456')" /></div>
+      <div class="column2">
+        <div class="container">
+          <p><b>{{especialista.nombre}} {{especialista.apellido}}</b> Especialista</p>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <div *ngFor="let admin of listaAdministrador">
-    <div class="card">
-        <div class="row">
-            <div class="column1"><img src="{{admin.foto1}}" /></div>
-            <div class="column2">
-                <div class="container">
-                    <p><b>{{admin.nombre}} {{admin.apellido}}</b> Administrador</p>
-                    <button (click)="selecUsuario(admin.email,'123456')">Iniciar Sesion</button>
-                </div>
-            </div>
+  <div class="card" (click)="selecUsuario(admin.email,'123456')">
+    <div class="row">
+      <div class="column1"><img src="{{admin.foto1}}" class="img" (click)="selecUsuario(admin.email,'123456')" /></div>
+      <div class="column2">
+        <div class="container" >
+          <p> <b>{{admin.nombre}} {{admin.apellido}}</b> Administrador</p>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 <!--
 

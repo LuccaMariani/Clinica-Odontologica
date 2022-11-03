@@ -1,18 +1,33 @@
 .margin {
-    margin-top: 10px;
+  margin-top: 10px;
 
 }
 
 .plus {
-    margin-top: 20px;
+  margin-top: 20px;
 
 }
 
 .invalid {
-    padding-left: 6px;
-    color: red;
+  padding-left: 6px;
+  color: red;
 }
-.especialidades{
-    display:contents;
-    max-width: 30px;
+
+.especialidades {
+  display: contents;
+  max-width: 30px;
+}
+
+.boton2 {
+  display: inline-block;
+  min-width: 53px;
+  font-size: 34px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
 }

@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AngularFireModule } from '@angular/fire/compat';
+
+//import { AngularFireModule } from '@angular/fire/compat';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -64,8 +67,7 @@ import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especial
   imports: [
     BrowserModule,
     AppRoutingModule,
-
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    //AngularFireModule.initializeApp(environment.firebaseConfig),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
@@ -75,6 +77,7 @@ import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especial
     // NgbModule
   ],
   providers: [
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
     StorageModule,
     MenuComponent
   ],

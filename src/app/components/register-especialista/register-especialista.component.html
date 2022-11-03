@@ -1,35 +1,45 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="registerEspecialistaForm" class="p-4 p-md-3 rounded-3 cuadro">
-    <div class="row g-2">
-        <div class="col-md">
-            <div class="form-floating mb-2">
-                <input type="name" class="form-control" id="nombre" placeholder="Nombre" formControlName="nombre">
-                <label for="floatingInput">Nombre</label>
-                <small
-                    *ngIf="registerEspecialistaForm.get('nombre')?.touched && registerEspecialistaForm.get('nombre')?.errors?.['required']"
-                    class="invalid">El nombre es requerido.</small>
-            </div>
-        </div>
-        <div class="col-md">
-            <div class="form-floating mb-2">
-                <input type="name" class="form-control" id="apellido" placeholder="Apellido" formControlName="apellido">
-                <label for="floatingInput">Apellido</label>
-                <small
-                    *ngIf="registerEspecialistaForm.get('apellido')?.touched && registerEspecialistaForm.get('apellido')?.errors?.['required']"
-                    class="invalid">El apellido es requerido.</small>
-            </div>
-        </div>
+  <div class="row g-2">
+    <div class="col-md">
+      <div class="form-floating mb-2">
+        <input type="name" class="form-control" id="nombre" placeholder="Nombre" formControlName="nombre">
+        <label for="floatingInput">Nombre</label>
+        <small
+          *ngIf="registerEspecialistaForm.get('nombre')?.touched && registerEspecialistaForm.get('nombre')?.errors?.['required']"
+          class="invalid">El nombre es requerido.</small>
+        <small
+          *ngIf="registerEspecialistaForm.get('nombre')?.touched && registerEspecialistaForm.get('nombre')?.errors?.['minlength']"
+          class="invalid">El nombre debe ser mas largo.</small>
+      </div>
     </div>
-    <div class="row g-2">
-        <div class="col-md-4">
-            <div class="form-floating mb-2">
-                <input type="number" class="form-control" id="edad" placeholder="Edad" formControlName="edad">
-                <label for="floatingInput">Edad</label>
-                <small
-                    *ngIf="registerEspecialistaForm.get('edad')?.touched && registerEspecialistaForm.get('edad')?.errors?.['required']"
-                    class="invalid">El edad es requerido.</small>
-            </div>
-        </div>
-        <!--
+    <div class="col-md">
+      <div class="form-floating mb-2">
+        <input type="name" class="form-control" id="apellido" placeholder="Apellido" formControlName="apellido">
+        <label for="floatingInput">Apellido</label>
+        <small
+          *ngIf="registerEspecialistaForm.get('apellido')?.touched && registerEspecialistaForm.get('apellido')?.errors?.['required']"
+          class="invalid">El apellido es requerido.</small>
+          <small
+          *ngIf="registerEspecialistaForm.get('apellido')?.touched && registerEspecialistaForm.get('apellido')?.errors?.['minlength']"
+          class="invalid">El apellido debe ser mas largo.</small>
+      </div>
+    </div>
+  </div>
+  <div class="row g-2">
+    <div class="col-md-4">
+      <div class="form-floating mb-2">
+        <input type="number" class="form-control" id="edad" placeholder="Edad" formControlName="edad">
+        <label for="floatingInput">Edad</label>
+        <small
+          *ngIf="registerEspecialistaForm.get('edad')?.touched && registerEspecialistaForm.get('edad')?.errors?.['required']"
+          class="invalid">El edad es requerido.</small>
+          <small
+          *ngIf="registerEspecialistaForm.get('edad')?.touched && registerEspecialistaForm.get('edad')?.errors?.['min']"
+          class="invalid">El edad debe ser mayor para poder registrarte.</small>
+
+      </div>
+    </div>
+    <!--
         <small *ngIf="registerEspecialistaForm.get('edad')?.errors?.['min']" class="valid-tooltip">
             hola
         </small>
@@ -37,17 +47,20 @@
             hola
         </small>
         -->
-        <div class="col-md-8">
-            <div class="form-floating mb-2">
-                <input type="number" class="form-control is" id="dni" placeholder="Dni" formControlName="dni">
-                <label for="dni">Dni</label>
-                <small
-                    *ngIf="registerEspecialistaForm.get('dni')?.touched && registerEspecialistaForm.get('dni')?.errors?.['required']"
-                    class="invalid">El dni es requerido.</small>
+    <div class="col-md-8">
+      <div class="form-floating mb-2">
+        <input type="number" class="form-control is" id="dni" placeholder="Dni" formControlName="dni">
+        <label for="dni">Dni</label>
+        <small
+          *ngIf="registerEspecialistaForm.get('dni')?.touched && registerEspecialistaForm.get('dni')?.errors?.['required']"
+          class="invalid">El dni es requerido.</small>
+          <small
+          *ngIf="registerEspecialistaForm.get('dni')?.touched && registerEspecialistaForm.get('dni')?.errors?.['min']"
+          class="invalid">El dni es incorrecto.</small>
 
-            </div>
-        </div>
-        <!--
+      </div>
+    </div>
+    <!--
             <small *ngIf="registerEspecialistaForm.get('dni')?.errors?.['required']" class="valid-tooltip">
                 hola
             </small>
@@ -55,53 +68,85 @@
                 hola
             </small>
             -->
-    </div>
-    <div class="form-floating mb-2">
-        <input type="email" class="form-control" id="email" placeholder="name@example.com" formControlName="email">
-        <label for="floatingInput">Direccion Email</label>
-        <small
-            *ngIf="registerEspecialistaForm.get('email')?.touched && registerEspecialistaForm.get('email')?.errors?.['required']"
-            class="invalid">El email es requerido.</small>
-    </div>
-    <div class="form-floating mb-2">
-        <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
-        <label for="floatingPassword">Contraseña</label>
-        <small
-            *ngIf="registerEspecialistaForm.get('password')?.touched && registerEspecialistaForm.get('password')?.errors?.['required']"
-            class="invalid">El Contraseña es requerido.</small>
-    </div>
-    <div class="form-group">
-        <label class='margin' style="margin-bottom: 0.6rem;" for="especialidad">Seleccione su especialidad, o elija
-            crear una nueva:</label>
-        <div class="container">
-            <h6><input type="checkbox" class="form-check-input" [checked]="agregarEspecialidadSeleccionado"
-                    (change)="onChangeNuevaEspecialidad($event)" /> Agregar una nueva especialidad
-            </h6>
-        </div>
-        <div class='especialidades' *ngFor="let especialidad of especialidadesBase">
-            <div class="container">
-                <h6><input type="checkbox" class="form-check-input" [checked]="especialidad.seleccionado"
-                        [value]="especialidad.especialidad" (change)="onChangeEspecialidad($event)" />
-                    {{especialidad.especialidad}}</h6>
-            </div>
+  </div>
+  <div class="form-floating mb-2">
+    <input type="email" class="form-control" id="email" placeholder="name@example.com" formControlName="email">
+    <label for="floatingInput">Direccion Email</label>
+    <small
+      *ngIf="registerEspecialistaForm.get('email')?.touched && registerEspecialistaForm.get('email')?.errors?.['required']"
+      class="invalid">El email es requerido.</small>
+  </div>
 
+  <div class="form-floating mb-2">
+    <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
+    <label for="floatingPassword">Contraseña</label>
+    <small
+      *ngIf="registerEspecialistaForm.get('password')?.touched && registerEspecialistaForm.get('password')?.errors?.['required']"
+      class="invalid">La Contraseña es requerida.</small>
+    <small
+      *ngIf="registerEspecialistaForm.get('password')?.touched && registerEspecialistaForm.get('password')?.errors?.['minlength']"
+      class="invalid">La Contraseña debe ser mas larga.</small>
+  </div>
+
+  <!-- ESPECIALIDADES -->
+  <div class="form-group">
+    <label class='margin' style="margin-bottom: 0.6rem;" for="especialidad">Seleccione su especialidad, o elija
+      crear una nueva:</label>
+
+    <div class="row g-2">
+      <div class="col-md">
+        <div class="form-floating mb-2">
+          <input type="text" class="form-control" id="especialidadNueva" placeholder="Escriba la especialidad a agregar"
+            formControlName="especialidadNueva">
+          <label for="floatingInput">Escriba aqui la especialidad a agregar</label>
         </div>
-        <div *ngIf="agregarEspecialidadSeleccionado">
-            <div class="form-floating mb-2 margin">
-                <input type="name" class="form-control" id="nuevaEspecialidad" placeholder="Especialidad"
-                    formControlName="nuevaEspecialidad">
-                <label for="floatingInput">Nueva Especialidad</label>
-                <small
-                    *ngIf="registerEspecialistaForm.get('nuevaEspecialidad')?.touched && registerEspecialistaForm.get('nuevaEspecialidad')?.errors?.['required']"
-                    class="invalid">La nueva especialidad es requerida.</small>
-                <small
-                    *ngIf="registerEspecialistaForm.get('nuevaEspecialidad')?.touched && registerEspecialistaForm.get('nuevaEspecialidad')?.errors?.['minlength']"
-                    class="invalid">La nueva especialidad debe se mas larga.</small>
-            </div>
+      </div>
+      <div class="col-md">
+        <div class="form-floating mb-2">
+          <button class="boton2" type="button" (click)="agregarEspecialidadNueva()">+</button>
         </div>
+      </div>
+    </div>
+
+
+    <div class="container">
+
+      <!--
+        <h6><input type="checkbox" class="form-check-input" [checked]="agregarEspecialidadSeleccionado"
+          (change)="onChangeNuevaEspecialidad($event)" /> Agregar una nueva especialidad
+      </h6>
+    -->
 
     </div>
+    <div class='especialidades' *ngFor="let especialidad of especialidadesBase">
+      <div class="container">
+        <h6><input type="checkbox" class="form-check-input" [checked]="especialidad.seleccionado"
+            [value]="especialidad.especialidad" (change)="onChangeEspecialidad($event)" />
+          {{especialidad.especialidad}}</h6>
+      </div>
+
+    </div>
+
     <!--
+      <div *ngIf="agregarEspecialidadSeleccionado">
+        <div class="form-floating mb-2 margin">
+          <input type="name" class="form-control" id="nuevaEspecialidad" placeholder="Especialidad"
+            formControlName="nuevaEspecialidad">
+          <label for="floatingInput">Nueva Especialidad</label>
+          <small
+            *ngIf="registerEspecialistaForm.get('nuevaEspecialidad')?.touched && registerEspecialistaForm.get('nuevaEspecialidad')?.errors?.['required']"
+            class="invalid">La nueva especialidad es requerida.</small>
+          <small
+            *ngIf="registerEspecialistaForm.get('nuevaEspecialidad')?.touched && registerEspecialistaForm.get('nuevaEspecialidad')?.errors?.['minlength']"
+            class="invalid">La nueva especialidad debe se mas larga.</small>
+        </div>
+      </div>
+
+    -->
+
+
+  </div>
+  <!--
         <select class="form-select" id="especialidad" formControlName="especialidad">
             <option *ngFor="let especialidad of especialidades">
                 {{especialidad.especialidad}}</option>
@@ -110,28 +155,28 @@
             *ngIf="registerEspecialistaForm.get('especialidad')?.touched && registerEspecialistaForm.get('especialidad')?.errors?.['required']"
             class="invalid">El especialidad es requerido.</small>
     VIEJOO
-    
+
     -->
 
-    <div class="form-group mb-2">
-        <label class='plus'>Seleccione 1 foto para su perfil:</label>
-    </div>
+  <div class="form-group mb-2">
+    <label class='plus'>Seleccione 1 foto para su perfil:</label>
+  </div>
 
-    <div class="form-group mb-2">
-        <input type="file" class="form-control-file" id="foto1" formControlName="foto1"
-            placeholder="Seleccione una Foto" (change)="subirFoto($event)">
-        <small
-            *ngIf="registerEspecialistaForm.get('foto1')?.touched && registerEspecialistaForm.get('foto1')?.errors?.['required']"
-            class="invalid">La contraseña es requerida.</small>
+  <div class="form-group mb-2">
+    <input type="file" class="form-control-file" id="foto1" formControlName="foto1" placeholder="Seleccione una Foto"
+      (change)="subirFoto($event)">
+    <small
+      *ngIf="registerEspecialistaForm.get('foto1')?.touched && registerEspecialistaForm.get('foto1')?.errors?.['required']"
+      class="invalid">La contraseña es requerida.</small>
 
-    </div>
+  </div>
 
-    <hr class="mb-4">
-    <button class="w-150 btn btn-lg btn-primary" (click)="verEspecialidades()" type="button">Ver
-        especialidades</button>
+  <hr class="mb-4">
+  <button class="w-150 btn btn-lg btn-primary" (click)="verEspecialidades()" type="button">Ver
+    especialidades</button>
 
-    <button [disabled]="registerEspecialistaForm.invalid" class="w-150 btn btn-lg btn-primary"
-        type="submit">Registrarme</button>
+  <button [disabled]="registerEspecialistaForm.invalid" class="w-150 btn btn-lg btn-primary"
+    type="submit">Registrarme</button>
 
 
 </form>

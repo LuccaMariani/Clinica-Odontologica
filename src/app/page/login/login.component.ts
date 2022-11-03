@@ -9,7 +9,7 @@ import { AutenticarService } from 'src/app/services/autenticar.service';
 import { GuardsService } from 'src/app/services/guards.service';
 import { GuardsCheckEnd } from '@angular/router';
 import { Usuario } from 'src/app/interface/usuario';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -22,12 +22,13 @@ export class LoginComponent implements OnInit {
 
   public loginForm!: FormGroup;
   private email: string;
-  
+
   constructor(
     private readonly fb: FormBuilder,
     private usuariosSV: UsuariosService,
     private autenticarSV: AutenticarService,
-    private guardSV: GuardsService) {
+    private guardSV: GuardsService,
+    private ruteo: Router) {
     this.email = '';
   }
 
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required]]
     })
   }
-  
+
   parametrosUsuario(usuario:Usuario) {
     console.log(usuario.email);
     console.log(usuario.password);
@@ -60,12 +61,12 @@ export class LoginComponent implements OnInit {
 
     this.autenticarSV.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
       .then(res => {
-        
-        this.autenticarSV.currentUser = this.usuariosSV.getUsuario(this.loginForm.get('email')?.value); 
-        //console.log('login usuario conseguido', this.usuariosSV.getUsuario(this.loginForm.get('email')?.value))
-        
-        this.email = this.loginForm.get('email')?.value;
 
+        this.autenticarSV.currentUser = this.usuariosSV.getUsuario(this.loginForm.get('email')?.value);
+        //console.log('login usuario conseguido', this.usuariosSV.getUsuario(this.loginForm.get('email')?.value))
+
+        this.email = this.loginForm.get('email')?.value;
+        this.ruteo.navigateByUrl("mi_perfil");
       })
   }
 

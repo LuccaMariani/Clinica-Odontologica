@@ -53,13 +53,21 @@ export class UsuariosService {
   }
 
   guardarEspecialista(especialista: Especialista) {
-    console.log("especialista a guardar:", especialista);
+    console.log(">>>>>>>> especialista a guardar:", especialista);
+
+    let especialidades :string[]= []
+
+    especialista.especialidades.forEach(especialidad => {
+      especialidades.push(especialidad.especialidad);
+    });
+
+
     return this.firestore.collection(this.rutaEspecialista).doc(especialista.email).set({
       nombre: especialista.nombre,
       apellido: especialista.apellido,
       edad: especialista.edad,
       dni: especialista.dni,
-      especialidades: especialista.especialidades,
+      especialidades: especialidades,
       email: especialista.email,
       habilitado: especialista.habilitado,
       foto1: especialista.foto1
@@ -114,10 +122,10 @@ export class UsuariosService {
         let admins = this.firestore.collection<any>(this.rutaAdmin)
         let especialsitas = this.firestore.collection<any>(this.rutaEspecialista)
         let pacientes = this.firestore.collection<any>(this.rutaPaciente)
-    
+
         admins.add(especialsitas);
         admins.add(pacientes);
-    
+
         return admins.doc(email).valueChanges(); */
   }
 

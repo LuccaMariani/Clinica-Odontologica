@@ -16,12 +16,22 @@ import { ThisReceiver } from '@angular/compiler';
 import { Especialidad } from 'src/app/interface/especialidad';
 import { Especialidades } from 'src/app/class/especialidades';
 
+
+import { IfStmt } from '@angular/compiler';
+import { FormGroup, FormControl, Validators, ValidationErrors, AbstractControl, ValidatorFn, FormBuilder } from '@angular/forms';
+import { time } from 'console';
+
+
+
+
+
 @Component({
   selector: 'app-solicitar-turno',
   templateUrl: './solicitar-turno.component.html',
   styleUrls: ['./solicitar-turno.component.scss']
 })
 export class SolicitarTurnoComponent implements OnInit {
+  [x: string]: any;
 
   public especialidades: any
   public especialistas?: Especialista[];
@@ -38,6 +48,7 @@ export class SolicitarTurnoComponent implements OnInit {
   public listaTurnos?: Turno[];
   public listaEspecialidades?: any[];
 
+  public registroTurnoForm!: FormGroup;
 
   public turno: Turno = {
     id: '',
@@ -61,9 +72,10 @@ export class SolicitarTurnoComponent implements OnInit {
   //horariosMañana = ["08:00", "09:00", "10:00", "11:00"]
   //horariosTarde = ["14:00", "15:00", "16:00", "17:00"]
 
-  
+
 
   constructor(
+    private readonly fb: FormBuilder,
     private usuariosSV: UsuariosService,
     private autenticarSV: AutenticarService,
     private especialidadesSV: EspecialdadesService,
@@ -74,7 +86,103 @@ export class SolicitarTurnoComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerDatosUsuario();
     this.obtenerDatos();
+    this.MaxmimoTurno();
+
+    this.registroTurnoForm = this.initForm();
+
   }
+
+  initForm(): FormGroup {
+
+    return this.fb.group({
+      especialidad: new FormControl('', [Validators.required]),
+      especialista: new FormControl('', [Validators.required]),
+      fecha: new FormControl('', [Validators.required]),
+      hora: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    }, { validators: this.HoraValidator('hora') },
+    );
+  }
+
+
+  MaxmimoTurno() {
+    let numWeeks = 2;
+    let now = new Date();
+    //now.setDate(now.getDate() + numWeeks * 7);
+    (document.getElementById('fecha') as HTMLInputElement).max = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() + 14}`;
+    (document.getElementById('fecha') as HTMLInputElement).min = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() +1  }`;
+    console.log('aaaa', `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() + 14}`);
+    console.log('aaaa', `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() -1}`);
+  }
+
+
+  HoraValidator(controlHora: string): ValidatorFn {
+
+  /*
+    return (control: AbstractControl): ValidationErrors | null => {
+      const formGroup = control as FormGroup
+      const hora = formGroup.get(controlHora)?.value;
+      //console.log(this.especialista);
+
+
+
+
+      if (this.especialista != null) {
+
+
+
+        let horaMin = Date.parse(`01/01/2011 ${this.especialista.data.especialista.horaMin}`);
+        let horaMax = Date.parse(`01/01/2011 ${this.especialista.data.especialista.horaMax}`);
+
+
+        let horaAux = Date.parse(`01/01/2011 ${hora}`);
+        console.log("hora min: " + horaMin + " hora max: " + horaMax);
+        console.log("hora elegida" + horaAux);
+        if (horaAux >= horaMin && horaAux <= horaMax) {
+          //console.log("hora min: "+this.especialista.data.especialista.horaMin+" hora max: "+this.especialista.data.especialista.horaMax);
+          //console.log("hora elegida"+hora);
+          console.log("entro");
+          let turnoAux2 = JSON.stringify(this.turnoList);
+          let turnoAux3 = JSON.parse(turnoAux2);
+          //console.log(turnoAux2);  // output: Apple Orange Banana
+          //console.log(turnoAux3);  // output: Apple Orange Banana
+          for (let i = 0; i < turnoAux3.length; i++) {
+            console.log(turnoAux3[i]);
+
+            let horaAuxTurno = Date.parse(`01/01/2011 ${turnoAux3[i].data.data.hora}`);
+            //let horaAux=Date.parse(`01/01/2011 ${hora}`);
+            console.log("HORARIO EN USO " + horaAuxTurno);
+            console.log("NUEVO TURNO " + horaAux);
+            console.log("HORARIO EN USO MAX" + (horaAuxTurno + 900000));
+
+            if ((horaAuxTurno + 900000) >= horaAux && horaAuxTurno <= horaAux) {
+              console.log("fallo2");
+              return { turnoSuperpuesto: true }
+            } else {
+              console.log("entro2");
+              return null;
+            }
+          }
+
+
+          return null;
+        } else {
+          return { errorHorasMaxMin: true }
+        }
+
+      } else {
+        return { errorHorasMaxMin: true };
+      }
+
+
+
+
+
+    }*/
+    return (control: AbstractControl): ValidationErrors | null=> { return null;}
+  }
+
+
+
 
   obtenerEspecialidades() {
     return this.listaEspecialidades
@@ -84,24 +192,24 @@ export class SolicitarTurnoComponent implements OnInit {
 
   }
 
-  obtenerEspecialistas(){
+  obtenerEspecialistas() {
 
     return this.listaEspecialidades
   }
 
-  seleccionarEspecialista(especialista: Especialista){
+  seleccionarEspecialista(especialista: Especialista) {
 
   }
 
-  horariosDisponibles(){
+  horariosDisponibles() {
     return ''
   }
 
-  seleccionarHorario(horarioDisponible:any){
+  seleccionarHorario(horarioDisponible: any) {
 
   }
 
-  crearTurno(){
+  crearTurno() {
 
   }
 
