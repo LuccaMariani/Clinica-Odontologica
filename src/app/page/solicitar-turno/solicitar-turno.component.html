@@ -1,87 +1,156 @@
 <!-- TODO FIXME MARGIN -->
 
 
+<div class="fondo">
+
+  <h3>TURNOS</h3>
+
+  <div [ngSwitch]="pasoSwitch">
+    <div *ngSwitchCase="1">
+
+      <h4>
+        Seleccione Especialista:
+      </h4>
+      <div class="containerEspecialistas">
+        <div *ngFor="let especialista of listaEspecialistas">
+          <div class="especialista">
+            <div class="card">
+              <div class="column">
+                <img src="{{especialista.foto1}}" class="img" (click)="selecEspecialista(especialista)" />
 
 
-<div class="col-md-10 mx-auto col-lg-5 margin">
-    <div class="fondo">
-        <div>
-            <div>
-                <h3>TURNOS</h3>
+              </div>
+              <div class="textoEspecialista">
+                <label>{{especialista.nombre}} {{especialista.apellido}}</label>
+
+              </div>
             </div>
-<!--
-            <div>
-                <div>
-                    <h6>
-                        Seleccione una especialidad:
-                    </h6>
-                </div>
-                <div>
-                    <button *ngFor="let especialidad of obtenerEspecialidades()"
-                        (click)="seleccionarEspecialidad(especialidad)">
-                        {{especialidad.especialidad}} </button>
-                </div>
-            </div>
-
-            <div>
-                <h6>
-                    Seleccione un especialista:
-                </h6>
-                <div>
-                    <button *ngFor="let especialista of obtenerEspecialistas()" (click)="seleccionarEspecialista(especialista)">
-                        {{especialista.nombre}}
-                    </button>
-                </div>
-            </div>
-
-            <div>
-                <div>
-                    <h4>
-                        Horarios Disponibles:
-                    </h4>
-                </div>
-                <div>
-                    <button *ngFor="let horarioDisponible of horariosDisponibles()"
-                        (click)="seleccionarHorario(horarioDisponible)"> {{horarioDisponible}} </button>
-                </div>
-            </div>
-
-
--->
-            <div>
-              Fecha:
-              <input type="date" id="fecha" class="form-control" placeholder="Fecha"
-                  aria-describedby="defaultRegisterFormPhoneHelpBlock"
-                  formControlName="fecha" (load)="MaxmimoTurno()">
-              <p class="text-danger"
-                  *ngIf="registroTurnoForm.get('fecha')?.errors && registroTurnoForm.get('fecha')?.touched">
-                  Fecha
-                  requerida
-              </p>
           </div>
-            <div>
-                <div>
-                    <h3>
-                        Turno correspondiente:
-                    </h3>
-                </div>
-                <div>
-                    <ul>
-                        <li>
-                            Horario: {{datos?.horarioSeleccionado}}
-                        </li>
-                        <li>
-                            Especialidad: {{datos?.especialidad}}
-                        </li>
-                        <li>
-                            Especialista: {{datos?.especialista}} {{datos?.especialista}}
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <button (click)="crearTurno()"> Crear </button>
-                </div>
-            </div>
         </div>
+      </div>
+
+      <button class="boton" (click)="siguiente()"> Siguiente </button>
+      <button class="boton" (click)="atras()"> Atras </button>
     </div>
+
+
+    <div *ngSwitchCase="2">
+      <h4>
+        Seleccione Especialidad:
+      </h4>
+      <div class="containerEspecialistas">
+        <div *ngFor="let especialidad of especialistaSeleccionado.especialidades">
+          <div class="especialista">
+            <div class="card">
+              <div class="column">
+                <img src="{{especialistaSeleccionado.foto1}}" class="img"
+                  (click)="selecEspecialista(especialistaSeleccionado)" />
+
+
+              </div>
+              <div class="textoEspecialista">
+                <label>{{especialidad.nombre}}</label>
+                <label>{{especialidad}}</label>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button (click)="siguiente()"> Siguiente </button>
+      <button (click)="atras()"> Atras </button>
+    </div>
+
+    <div *ngSwitchCase="3">
+      <h4>
+        Seleccione Horario:
+      </h4>
+      <div>
+        Fecha:
+        <input type="date" id="fecha" class="form-control" placeholder="Fecha"
+          aria-describedby="defaultRegisterFormPhoneHelpBlock" formControlName="fecha" (load)="MaxmimoTurno()">
+        <p class="text-danger"
+          *ngIf="registroTurnoForm.get('fecha')?.errors && registroTurnoForm.get('fecha')?.touched">
+          Fecha
+          requerida
+        </p>
+      </div>
+      <button class="boton" (click)="siguiente()"> Siguiente </button>
+      <button class="boton" (click)="atras()"> Atras </button>
+    </div>
+
+    <div *ngSwitchCase="4">
+
+      <button class="boton" (click)="siguiente()"> Siguiente </button>
+      <button class="boton" (click)="atras()"> Atras </button>
+    </div>
+
+  </div>
+
+  <!--
+                  <div>
+                      <div>
+                          <h6>
+                              Seleccione una especialidad:
+                          </h6>
+                      </div>
+                      <div>
+                          <button *ngFor="let especialidad of obtenerEspecialidades()"
+                              (click)="seleccionarEspecialidad(especialidad)">
+                              {{especialidad.especialidad}} </button>
+                      </div>
+                  </div>
+
+                  <div>
+                      <h6>
+                          Seleccione un especialista:
+                      </h6>
+                      <div>
+                          <button *ngFor="let especialista of obtenerEspecialistas()" (click)="seleccionarEspecialista(especialista)">
+                              {{especialista.nombre}}
+                          </button>
+                      </div>
+                  </div>
+
+                  <div>
+                      <div>
+                          <h4>
+                              Horarios Disponibles:
+                          </h4>
+                      </div>
+                      <div>
+                          <button *ngFor="let horarioDisponible of horariosDisponibles()"
+                              (click)="seleccionarHorario(horarioDisponible)"> {{horarioDisponible}} </button>
+                      </div>
+                  </div>
+
+
+                  -->
+
+  <!--
+    <div>
+      <div>
+        <h4>
+          Turno correspondiente:
+        </h4>
+      </div>
+      <div>
+        <ul>
+          <li>
+            Horario: {{datos?.horarioSeleccionado}}
+          </li>
+          <li>
+            Especialidad: {{datos?.especialidad}}
+          </li>
+          <li>
+            Especialista: {{datos?.especialista}} {{datos?.especialista}}
+          </li>
+        </ul>
+      </div>
+      <div>
+
+        <button (click)="crearTurno()"> Crear </button>
+      </div>
+    </div> -->
+
 </div>

@@ -31,7 +31,12 @@ import { time } from 'console';
   styleUrls: ['./solicitar-turno.component.scss']
 })
 export class SolicitarTurnoComponent implements OnInit {
-  [x: string]: any;
+
+  //
+  public pasoSwitch = 1;
+
+  public especialistaSeleccionado: Especialista = new Especialista();
+  //
 
   public especialidades: any
   public especialistas?: Especialista[];
@@ -81,6 +86,8 @@ export class SolicitarTurnoComponent implements OnInit {
     private especialidadesSV: EspecialdadesService,
     private turnoService: TurnosService,
     private horarioService: HorariosService) {
+
+
   }
 
   ngOnInit(): void {
@@ -105,80 +112,84 @@ export class SolicitarTurnoComponent implements OnInit {
 
 
   MaxmimoTurno() {
+
     let numWeeks = 2;
     let now = new Date();
     //now.setDate(now.getDate() + numWeeks * 7);
+
     (document.getElementById('fecha') as HTMLInputElement).max = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() + 14}`;
-    (document.getElementById('fecha') as HTMLInputElement).min = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() +1  }`;
+    (document.getElementById('fecha') as HTMLInputElement).min = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() - 1}`;
+
     console.log('aaaa', `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() + 14}`);
-    console.log('aaaa', `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() -1}`);
+    console.log('aaaa', `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() - 1}`);
+
   }
 
 
   HoraValidator(controlHora: string): ValidatorFn {
 
-  /*
-    return (control: AbstractControl): ValidationErrors | null => {
-      const formGroup = control as FormGroup
-      const hora = formGroup.get(controlHora)?.value;
-      //console.log(this.especialista);
+    /*
+      return (control: AbstractControl): ValidationErrors | null => {
+        const formGroup = control as FormGroup
+        const hora = formGroup.get(controlHora)?.value;
+        //console.log(this.especialista);
 
 
 
 
-      if (this.especialista != null) {
+        if (this.especialista != null) {
 
 
 
-        let horaMin = Date.parse(`01/01/2011 ${this.especialista.data.especialista.horaMin}`);
-        let horaMax = Date.parse(`01/01/2011 ${this.especialista.data.especialista.horaMax}`);
+          let horaMin = Date.parse(`01/01/2011 ${this.especialista.data.especialista.horaMin}`);
+          let horaMax = Date.parse(`01/01/2011 ${this.especialista.data.especialista.horaMax}`);
 
 
-        let horaAux = Date.parse(`01/01/2011 ${hora}`);
-        console.log("hora min: " + horaMin + " hora max: " + horaMax);
-        console.log("hora elegida" + horaAux);
-        if (horaAux >= horaMin && horaAux <= horaMax) {
-          //console.log("hora min: "+this.especialista.data.especialista.horaMin+" hora max: "+this.especialista.data.especialista.horaMax);
-          //console.log("hora elegida"+hora);
-          console.log("entro");
-          let turnoAux2 = JSON.stringify(this.turnoList);
-          let turnoAux3 = JSON.parse(turnoAux2);
-          //console.log(turnoAux2);  // output: Apple Orange Banana
-          //console.log(turnoAux3);  // output: Apple Orange Banana
-          for (let i = 0; i < turnoAux3.length; i++) {
-            console.log(turnoAux3[i]);
+          let horaAux = Date.parse(`01/01/2011 ${hora}`);
+          console.log("hora min: " + horaMin + " hora max: " + horaMax);
+          console.log("hora elegida" + horaAux);
+          if (horaAux >= horaMin && horaAux <= horaMax) {
+            //console.log("hora min: "+this.especialista.data.especialista.horaMin+" hora max: "+this.especialista.data.especialista.horaMax);
+            //console.log("hora elegida"+hora);
+            console.log("entro");
+            let turnoAux2 = JSON.stringify(this.turnoList);
+            let turnoAux3 = JSON.parse(turnoAux2);
+            //console.log(turnoAux2);  // output: Apple Orange Banana
+            //console.log(turnoAux3);  // output: Apple Orange Banana
+            for (let i = 0; i < turnoAux3.length; i++) {
+              console.log(turnoAux3[i]);
 
-            let horaAuxTurno = Date.parse(`01/01/2011 ${turnoAux3[i].data.data.hora}`);
-            //let horaAux=Date.parse(`01/01/2011 ${hora}`);
-            console.log("HORARIO EN USO " + horaAuxTurno);
-            console.log("NUEVO TURNO " + horaAux);
-            console.log("HORARIO EN USO MAX" + (horaAuxTurno + 900000));
+              let horaAuxTurno = Date.parse(`01/01/2011 ${turnoAux3[i].data.data.hora}`);
+              //let horaAux=Date.parse(`01/01/2011 ${hora}`);
+              console.log("HORARIO EN USO " + horaAuxTurno);
+              console.log("NUEVO TURNO " + horaAux);
+              console.log("HORARIO EN USO MAX" + (horaAuxTurno + 900000));
 
-            if ((horaAuxTurno + 900000) >= horaAux && horaAuxTurno <= horaAux) {
-              console.log("fallo2");
-              return { turnoSuperpuesto: true }
-            } else {
-              console.log("entro2");
-              return null;
+              if ((horaAuxTurno + 900000) >= horaAux && horaAuxTurno <= horaAux) {
+                console.log("fallo2");
+                return { turnoSuperpuesto: true }
+              } else {
+                console.log("entro2");
+                return null;
+              }
             }
+
+
+            return null;
+          } else {
+            return { errorHorasMaxMin: true }
           }
 
-
-          return null;
         } else {
-          return { errorHorasMaxMin: true }
+          return { errorHorasMaxMin: true };
         }
 
-      } else {
-        return { errorHorasMaxMin: true };
-      }
 
 
 
 
-
-    }*/
-    return (control: AbstractControl): ValidationErrors | null=> { return null;}
+      }*/
+    return (control: AbstractControl): ValidationErrors | null => { return null; }
   }
 
 
@@ -187,6 +198,7 @@ export class SolicitarTurnoComponent implements OnInit {
   obtenerEspecialidades() {
     return this.listaEspecialidades
   }
+
   seleccionarEspecialidad(especialidad: Especialidad) {
     //this.datos.especialidad = especialidad.valor
 
@@ -197,9 +209,6 @@ export class SolicitarTurnoComponent implements OnInit {
     return this.listaEspecialidades
   }
 
-  seleccionarEspecialista(especialista: Especialista) {
-
-  }
 
   horariosDisponibles() {
     return ''
@@ -207,6 +216,27 @@ export class SolicitarTurnoComponent implements OnInit {
 
   seleccionarHorario(horarioDisponible: any) {
 
+  }
+
+  siguiente() {
+    this.pasoSwitch = this.pasoSwitch + 1
+  }
+
+  atras() {
+    if (this.pasoSwitch != 1) {
+      this.pasoSwitch = this.pasoSwitch - 1
+    }
+  }
+
+  selecEspecialista(especialista: Especialista) {
+
+    this.especialistaSeleccionado = especialista;
+
+    console.log('especialistaSeleccionado :', this.especialistaSeleccionado)
+
+    if (this.especialistaSeleccionado != undefined) {
+      this.pasoSwitch = 2;
+    }
   }
 
   crearTurno() {
