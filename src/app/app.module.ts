@@ -40,6 +40,9 @@ import { SolicitarTurnoComponent } from './page/solicitar-turno/solicitar-turno.
 import { MiPerfilComponent } from './page/mi-perfil/mi-perfil.component';
 import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis-turnos-paciente.component';
 import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especialista/mis-turnos-especialista.component';
+//
+import { ToastrModule } from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 
 
 @NgModule({
@@ -67,6 +70,9 @@ import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especial
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ToastrModule.forRoot(),
+    BrowserModule,
+    BrowserAnimationsModule,
     //AngularFireModule.initializeApp(environment.firebaseConfig),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

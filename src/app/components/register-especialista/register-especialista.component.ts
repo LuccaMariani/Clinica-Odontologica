@@ -63,9 +63,19 @@ export class RegisterEspecialistaComponent implements OnInit {
   }
 
   verEspecialidades() {
+
     console.log('especialidadesSeleccionadas', this.especialidadesSeleccionadas);
     console.log('especialidadesBase', this.especialidadesBase);
     console.log('especialidadNueva', this.especialidadNueva);
+
+    let especialidadesAgregarAFirebase
+    this.especialidadesBase.forEach(especialidad => {
+      this.especialidadesBaseAgregar.forEach(especialidaNueva => {
+        if(especialidad.especialidad == especialidaNueva){
+
+        }
+      });
+    });
   }
 
   agregarEspecialidadNueva() {

@@ -18,7 +18,6 @@
               <div class="column">
                 <img src="{{especialista.foto1}}" class="img" (click)="selecEspecialista(especialista)" />
 
-
               </div>
               <div class="textoEspecialista">
                 <label>{{especialista.nombre}} {{especialista.apellido}}</label>
@@ -44,9 +43,7 @@
             <div class="card">
               <div class="column">
                 <img src="{{especialistaSeleccionado.foto1}}" class="img"
-                  (click)="selecEspecialista(especialistaSeleccionado)" />
-
-
+                  (click)="selecEspecialidad(especialidad)" />
               </div>
               <div class="textoEspecialista">
                 <label>{{especialidad.nombre}}</label>
@@ -63,24 +60,36 @@
 
     <div *ngSwitchCase="3">
       <h4>
-        Seleccione Horario:
+        Seleccione Fecha:
       </h4>
       <div>
         Fecha:
-        <input type="date" id="fecha" class="form-control" placeholder="Fecha"
-          aria-describedby="defaultRegisterFormPhoneHelpBlock" formControlName="fecha" (load)="MaxmimoTurno()">
-        <p class="text-danger"
-          *ngIf="registroTurnoForm.get('fecha')?.errors && registroTurnoForm.get('fecha')?.touched">
-          Fecha
-          requerida
-        </p>
+        <div class="containerEspecialistas">
+          <div *ngFor="let fecha of fechasParaTurnos">
+            <button (click)="selecFecha(fecha)" >{{fecha}}</button>
+
+          </div>
+        </div>
+
+        <!--
+            <input type="date" id="fecha" class="form-control" placeholder="Fecha"
+                      aria-describedby="defaultRegisterFormPhoneHelpBlock" formControlName="fecha" (load)="MaxmimoTurno()">
+                    <p class="text-danger"
+                      *ngIf="registroTurnoForm.get('fecha')?.errors && registroTurnoForm.get('fecha')?.touched">
+                      Fecha
+                      requerida
+                    </p>
+        -->
+
       </div>
       <button class="boton" (click)="siguiente()"> Siguiente </button>
       <button class="boton" (click)="atras()"> Atras </button>
     </div>
 
     <div *ngSwitchCase="4">
-
+      <h4>
+        Seleccione Horario:
+      </h4>
       <button class="boton" (click)="siguiente()"> Siguiente </button>
       <button class="boton" (click)="atras()"> Atras </button>
     </div>

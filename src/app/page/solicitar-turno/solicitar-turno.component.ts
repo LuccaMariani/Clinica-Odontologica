@@ -34,7 +34,14 @@ export class SolicitarTurnoComponent implements OnInit {
 
   //
   public pasoSwitch = 1;
+  //
 
+  public fechasParaTurnos: string[] = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
+
+  // se usan
+  public turnoSeleccionado: any;
+  public especialidadSeleccionada: any;
+  public fechaSeleccionada: any;
   public especialistaSeleccionado: Especialista = new Especialista();
   //
 
@@ -77,8 +84,6 @@ export class SolicitarTurnoComponent implements OnInit {
   //horariosMañana = ["08:00", "09:00", "10:00", "11:00"]
   //horariosTarde = ["14:00", "15:00", "16:00", "17:00"]
 
-
-
   constructor(
     private readonly fb: FormBuilder,
     private usuariosSV: UsuariosService,
@@ -86,21 +91,19 @@ export class SolicitarTurnoComponent implements OnInit {
     private especialidadesSV: EspecialdadesService,
     private turnoService: TurnosService,
     private horarioService: HorariosService) {
-
-
   }
 
   ngOnInit(): void {
     this.obtenerDatosUsuario();
     this.obtenerDatos();
     this.MaxmimoTurno();
-
     this.registroTurnoForm = this.initForm();
 
+    this.cargarFechas();
+    console.log('turnos', this.fechasParaTurnos);
   }
 
   initForm(): FormGroup {
-
     return this.fb.group({
       especialidad: new FormControl('', [Validators.required]),
       especialista: new FormControl('', [Validators.required]),
@@ -110,6 +113,140 @@ export class SolicitarTurnoComponent implements OnInit {
     );
   }
 
+  obtenerEspecialidades() {
+    return this.listaEspecialidades
+  }
+
+  selecEspecialista(especialista: Especialista) {
+    this.especialistaSeleccionado = especialista;
+
+    console.log('especialistaSeleccionado :', this.especialistaSeleccionado)
+
+    if (this.especialistaSeleccionado != undefined) {
+      this.pasoSwitch = 2;
+    }
+  }
+
+  selecEspecialidad(especialidad: Especialidad) {
+    this.especialidadSeleccionada = especialidad;
+    this.pasoSwitch = 3;
+    this.cargarFechas();
+  }
+
+  selecFecha(fecha: any) {
+    this.fechaSeleccionada = fecha;
+  }
+
+  selecHorario(horarioDisponible: any) {
+
+  }
+
+
+  obtenerEspecialistas() {
+    return this.listaEspecialidades;
+  }
+
+  horariosDisponibles() {
+    return ''
+  }
+
+
+
+  siguiente() {
+    this.pasoSwitch = this.pasoSwitch + 1
+    this.cargarFechas();
+    console.log('turnos', this.fechasParaTurnos);
+
+  }
+
+  atras() {
+    if (this.pasoSwitch != 1) {
+      this.pasoSwitch = this.pasoSwitch - 1
+    }
+  }
+
+
+  crearTurno() {
+    this.turnoSeleccionado = {
+      //paciente:this.auth.UsuarioActivo,
+      paciente: 'ACA VA nombre paciente',
+      especialista: this.especialistaSeleccionado,
+      //fecha:turno,
+      fecha: 'ACA VA fecha y horario',
+      especialidad: this.especialidadSeleccionada,
+      estado: 'pendiente',
+      diagnostico: "",
+      comentario_especialista: "",
+      comentario_usuario: "",
+      razon_cancelacion: "",
+      historial: null
+    }
+
+  }
+
+  obtenerDatosUsuario() {
+    this.autenticarSV.getUserLogged().subscribe(userLogged => {
+      this.usuariosSV.getPacientes().subscribe(i => {
+        i.forEach(user => {
+          console.log('buscando pacientes...')
+          if (user.email == userLogged?.email) {
+            console.log('paciente encontrado')
+            this.usuario = user
+          }
+        })
+      })
+
+      this.usuariosSV.getAdmins().subscribe(i => {
+        i.forEach(user => {
+          console.log('buscando pacientes...')
+          if (user.email == userLogged?.email) {
+            console.log('paciente encontrado')
+            this.usuario = user
+          }
+        })
+      })
+    })
+  }
+
+  obtenerDatos() {
+    this.usuariosSV.getPacientes().subscribe(res => {
+      this.listaPacientes = res;
+    })
+
+    this.usuariosSV.getAdmins().subscribe(res => {
+      this.listaAdministrador = res;
+    })
+
+    this.usuariosSV.getEspecialistas().subscribe(res => {
+      this.listaEspecialistas = res;
+    })
+
+    this.turnoService.getTurnos().subscribe(res => {
+      this.listaTurnos = res;
+    })
+
+    this.especialidadesSV.getEspecialidades().subscribe(res => {
+      this.listaEspecialidades = res;
+    })
+  }
+
+
+  cargarFechas() {
+    let i = 1;
+    let now = new Date();
+
+    for (let index = 0; index < this.fechasParaTurnos.length; index++) {
+
+      if ((now.getDate() + index + 1) <= 31) {
+        this.fechasParaTurnos[index] = `${now.getDate() + index + 1}-${now.getMonth() + 1}-${now.getFullYear()}`;
+      }
+      else {
+        this.fechasParaTurnos[index] = `${now.getDate() + index + 1 - now.getDate() - (31 - now.getDate())}-${now.getMonth() + 2}-${now.getFullYear()}`;
+      }
+    }
+
+    console.log('turnos', this.fechasParaTurnos);
+  }
 
   MaxmimoTurno() {
 
@@ -122,9 +259,7 @@ export class SolicitarTurnoComponent implements OnInit {
 
     console.log('aaaa', `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() + 14}`);
     console.log('aaaa', `${now.getFullYear()}-${now.getMonth() + 1}-${now.getUTCDay() - 1}`);
-
   }
-
 
   HoraValidator(controlHora: string): ValidatorFn {
 
@@ -192,102 +327,5 @@ export class SolicitarTurnoComponent implements OnInit {
     return (control: AbstractControl): ValidationErrors | null => { return null; }
   }
 
-
-
-
-  obtenerEspecialidades() {
-    return this.listaEspecialidades
-  }
-
-  seleccionarEspecialidad(especialidad: Especialidad) {
-    //this.datos.especialidad = especialidad.valor
-
-  }
-
-  obtenerEspecialistas() {
-
-    return this.listaEspecialidades
-  }
-
-
-  horariosDisponibles() {
-    return ''
-  }
-
-  seleccionarHorario(horarioDisponible: any) {
-
-  }
-
-  siguiente() {
-    this.pasoSwitch = this.pasoSwitch + 1
-  }
-
-  atras() {
-    if (this.pasoSwitch != 1) {
-      this.pasoSwitch = this.pasoSwitch - 1
-    }
-  }
-
-  selecEspecialista(especialista: Especialista) {
-
-    this.especialistaSeleccionado = especialista;
-
-    console.log('especialistaSeleccionado :', this.especialistaSeleccionado)
-
-    if (this.especialistaSeleccionado != undefined) {
-      this.pasoSwitch = 2;
-    }
-  }
-
-  crearTurno() {
-
-  }
-
-  obtenerDatosUsuario() {
-    this.autenticarSV.getUserLogged().subscribe(userLogged => {
-      this.usuariosSV.getPacientes().subscribe(i => {
-        i.forEach(user => {
-          console.log('buscando pacientes...')
-          if (user.email == userLogged?.email) {
-            console.log('paciente encontrado')
-            this.usuario = user
-          }
-        })
-      })
-
-      this.usuariosSV.getAdmins().subscribe(i => {
-        i.forEach(user => {
-          console.log('buscando pacientes...')
-          if (user.email == userLogged?.email) {
-            console.log('paciente encontrado')
-            this.usuario = user
-          }
-        })
-      })
-    })
-  }
-
-
-  obtenerDatos() {
-    this.usuariosSV.getPacientes().subscribe(res => {
-      this.listaPacientes = res;
-    })
-
-    this.usuariosSV.getAdmins().subscribe(res => {
-      this.listaAdministrador = res;
-    })
-
-    this.usuariosSV.getEspecialistas().subscribe(res => {
-      this.listaEspecialistas = res;
-    })
-
-    this.turnoService.getTurnos().subscribe(res => {
-      this.listaTurnos = res;
-    })
-
-    this.especialidadesSV.getEspecialidades().subscribe(res => {
-      this.listaEspecialidades = res;
-    })
-  }
 
 }
