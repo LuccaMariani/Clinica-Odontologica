@@ -28,6 +28,10 @@ export class UsuariosService {
     return this.firestore.collection(this.rutaPaciente).doc(paciente.email).valueChanges();
   }
 
+  getPacienteEmail(email: any){
+    return this.firestore.collection(this.rutaPaciente).doc(email).valueChanges();
+  }
+
   guardarPaciente(paciente: Paciente) {
     console.log("paciente a guardar:", paciente);
     return this.firestore.collection(this.rutaPaciente).doc(paciente.email).set({
@@ -92,8 +96,8 @@ export class UsuariosService {
       dni: admin.dni,
       email: admin.email,
       habilitado: admin.habilitado,
-      foto1: admin.foto1
-
+      foto1: admin.foto1,
+      //uid: admin.uid,
     });
   }
 

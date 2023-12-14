@@ -3,7 +3,7 @@
 
 <div class="fondo">
 
-  <h3>TURNOS</h3>
+  <h3>RESERVA DE TURNOS</h3>
 
   <div [ngSwitch]="pasoSwitch">
     <div *ngSwitchCase="1">
@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <button class="boton" (click)="siguiente()"> Siguiente </button>
+
       <button class="boton" (click)="atras()"> Atras </button>
     </div>
 
@@ -54,7 +54,6 @@
           </div>
         </div>
       </div>
-      <button (click)="siguiente()"> Siguiente </button>
       <button (click)="atras()"> Atras </button>
     </div>
 
@@ -64,25 +63,26 @@
       </h4>
       <div>
         Fecha:
-        <div class="containerEspecialistas">
+        <div class="containerFecha">
           <div *ngFor="let fecha of fechasParaTurnos">
-            <button (click)="selecFecha(fecha)" >{{fecha}}</button>
+            <div class="fecha">
+                  <button (click)="selecFecha(fecha)" >{{fecha}}</button>
+            </div>
 
           </div>
         </div>
 
         <!--
-            <input type="date" id="fecha" class="form-control" placeholder="Fecha"
-                      aria-describedby="defaultRegisterFormPhoneHelpBlock" formControlName="fecha" (load)="MaxmimoTurno()">
-                    <p class="text-danger"
-                      *ngIf="registroTurnoForm.get('fecha')?.errors && registroTurnoForm.get('fecha')?.touched">
-                      Fecha
-                      requerida
-                    </p>
+        <input type="date" id="fecha" class="form-control" placeholder="Fecha"
+                  aria-describedby="defaultRegisterFormPhoneHelpBlock" formControlName="fecha" (load)="MaxmimoTurno()">
+                <p class="text-danger"
+                  *ngIf="registroTurnoForm.get('fecha')?.errors && registroTurnoForm.get('fecha')?.touched">
+                  Fecha
+                  requerida
+                </p>
         -->
 
       </div>
-      <button class="boton" (click)="siguiente()"> Siguiente </button>
       <button class="boton" (click)="atras()"> Atras </button>
     </div>
 
@@ -90,8 +90,32 @@
       <h4>
         Seleccione Horario:
       </h4>
+      <div class="containerFecha">
+        <div *ngFor="let horario of horariosParaTurnos">
+
+          <div class="fecha">
+            <button (click)="selecHorario(horario)" >{{horario}}</button>
+          </div>
+        </div>
+      </div>
       <button class="boton" (click)="siguiente()"> Siguiente </button>
       <button class="boton" (click)="atras()"> Atras </button>
+    </div>
+    <div *ngSwitchCase="5">
+      <h4>
+        Turno Seleccionado:
+      </h4>
+      <div class="containerEspecialistas">
+
+        <p>Paciente:     {{paciente.nombre}} {{paciente}}</p>
+
+        <p>Especialista:  {{especialistaSeleccionado.nombre}} {{especialistaSeleccionado.apellido}}</p>
+        <p>Especialidad:  {{especialidadSeleccionada}}</p>
+        <p>Fecha:         {{fechaSeleccionada}}</p>
+        <p>Horario:       {{horarioSeleccionado}}</p>
+      </div>
+      <button class="boton" (click)="cancelarTurno()"> Cancelar </button>
+      <button class="boton" (click)="confirmarTurno()"> Confirmar Reserva </button>
     </div>
 
   </div>

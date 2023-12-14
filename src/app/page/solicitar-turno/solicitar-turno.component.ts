@@ -11,17 +11,17 @@ import { HorariosService } from 'src/app/services/horarios.service';
 import { Especialista } from 'src/app/class/especialista';
 import { Paciente } from 'src/app/class/paciente';
 import { Administrador } from 'src/app/class/administrador';
-import { tipoUsuario } from 'src/app/interface/usuario';
+import { tipoUsuario, Usuario } from 'src/app/interface/usuario';
 import { ThisReceiver } from '@angular/compiler';
 import { Especialidad } from 'src/app/interface/especialidad';
 import { Especialidades } from 'src/app/class/especialidades';
-
+import { getAuth } from 'firebase/auth';
 
 import { IfStmt } from '@angular/compiler';
 import { FormGroup, FormControl, Validators, ValidationErrors, AbstractControl, ValidatorFn, FormBuilder } from '@angular/forms';
 import { time } from 'console';
 
-
+import { Router } from '@angular/router';
 
 
 
@@ -38,11 +38,25 @@ export class SolicitarTurnoComponent implements OnInit {
 
   public fechasParaTurnos: string[] = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
 
+  public horariosParaTurnos: string[] = [
+    '8:00', '8:30',
+    '9:00', '9:30',
+    '10:00', '10:30',
+    '11:00', '11:30',
+    '12:00', '12:30',
+    '13:00', '13:30',
+    '14:00', '14:30',
+    '15:00', '15:30',
+    '16:00', '16:30',
+    '17:00', '17:30',
+    '18:00', '18:30'];
+
   // se usan
   public turnoSeleccionado: any;
+  public especialistaSeleccionado: Especialista = new Especialista();
   public especialidadSeleccionada: any;
   public fechaSeleccionada: any;
-  public especialistaSeleccionado: Especialista = new Especialista();
+  public horarioSeleccionado: any;
   //
 
   public especialidades: any
@@ -80,9 +94,15 @@ export class SolicitarTurnoComponent implements OnInit {
     especialista: null,
     horarioSeleccionado: null
   }
-
+  public paciente:Paciente;
   //horariosMañana = ["08:00", "09:00", "10:00", "11:00"]
   //horariosTarde = ["14:00", "15:00", "16:00", "17:00"]
+
+  //robado, trae usuario y paciente
+  public pacienteSeleccionado: any[] = []
+  public usuarioB: any;
+  public usuarioLog: any;
+  //
 
   constructor(
     private readonly fb: FormBuilder,
@@ -90,10 +110,35 @@ export class SolicitarTurnoComponent implements OnInit {
     private autenticarSV: AutenticarService,
     private especialidadesSV: EspecialdadesService,
     private turnoService: TurnosService,
-    private horarioService: HorariosService) {
+    private horarioService: HorariosService,
+    private ruteo: Router) {
+      this.paciente =  this.autenticarSV.obtenerUsuarioDatos()
   }
 
   ngOnInit(): void {
+
+
+    //robado, trae usuario y paciente
+    const auth = getAuth();
+    console.log()
+    if (auth.currentUser != null) {
+      this.usuarioLog = auth.currentUser;
+      console.log(this.usuarioLog);
+      /*
+      this.usuarioB = this.serv.traerUsuario(this.usuarioLog);
+      console.log(this.usuario);*/
+    }
+    /*
+    if (this.usuarioB.paciente) {
+      console.log(this.usuarioB.paciente);
+      this.pacienteSeleccionado = [];
+      this.pacienteSeleccionado.push(this.usuarioB.id);
+      this.pacienteSeleccionado.push(this.usuarioB.nombre + ' ' + this.usuarioB.apellido);
+      //this.viewPacientes = true;
+    }*/
+
+    //
+
     this.obtenerDatosUsuario();
     this.obtenerDatos();
     this.MaxmimoTurno();
@@ -101,6 +146,8 @@ export class SolicitarTurnoComponent implements OnInit {
 
     this.cargarFechas();
     console.log('turnos', this.fechasParaTurnos);
+
+
   }
 
   initForm(): FormGroup {
@@ -131,14 +178,19 @@ export class SolicitarTurnoComponent implements OnInit {
     this.especialidadSeleccionada = especialidad;
     this.pasoSwitch = 3;
     this.cargarFechas();
+    console.log('especialidad seleccioanda', this.especialidadSeleccionada);
   }
 
   selecFecha(fecha: any) {
     this.fechaSeleccionada = fecha;
+    this.pasoSwitch = 4;
+    console.log('fecha seleccioanda', this.fechaSeleccionada);
   }
 
-  selecHorario(horarioDisponible: any) {
-
+  selecHorario(horario: any) {
+    this.horarioSeleccionado = horario;
+    this.pasoSwitch = 5;
+    console.log('horario seleccioando', this.horarioSeleccionado);
   }
 
 
@@ -156,7 +208,6 @@ export class SolicitarTurnoComponent implements OnInit {
     this.pasoSwitch = this.pasoSwitch + 1
     this.cargarFechas();
     console.log('turnos', this.fechasParaTurnos);
-
   }
 
   atras() {
@@ -165,11 +216,19 @@ export class SolicitarTurnoComponent implements OnInit {
     }
   }
 
+  cancelarTurno() {
 
-  crearTurno() {
+  }
+
+  public confirmarTurno() {
+    this.crearTurno()
+  }
+
+  private crearTurno() {
+
     this.turnoSeleccionado = {
       //paciente:this.auth.UsuarioActivo,
-      paciente: 'ACA VA nombre paciente',
+      paciente: this.autenticarSV.obtenerUsuarioDatos(),
       especialista: this.especialistaSeleccionado,
       //fecha:turno,
       fecha: 'ACA VA fecha y horario',
@@ -182,6 +241,11 @@ export class SolicitarTurnoComponent implements OnInit {
       historial: null
     }
 
+    this.turnoService.agregarTurno(this.turnoSeleccionado).then((value) => {
+      this.ruteo.navigateByUrl("mis_turnos");
+    }
+    );
+
   }
 
   obtenerDatosUsuario() {
@@ -193,6 +257,7 @@ export class SolicitarTurnoComponent implements OnInit {
             console.log('paciente encontrado')
             this.usuario = user
           }
+
         })
       })
 
@@ -245,7 +310,7 @@ export class SolicitarTurnoComponent implements OnInit {
       }
     }
 
-    console.log('turnos', this.fechasParaTurnos);
+    console.log('se cargaron las fechas para los turnos', this.fechasParaTurnos);
   }
 
   MaxmimoTurno() {

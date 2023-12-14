@@ -26,7 +26,7 @@ export class RegisterEspecialistaComponent implements OnInit {
 
   public especialidadesBase: any[] = [];
   public registerEspecialistaForm!: FormGroup;
-  private especialidadesBaseAgregar:string[] = [];
+  private especialidadesBaseAgregar: string[] = [];
   public especialidadesSeleccionadas: string[] = [];
   //public agregarEspecialidadSeleccionado: boolean;
   public foto: any;
@@ -71,7 +71,7 @@ export class RegisterEspecialistaComponent implements OnInit {
     let especialidadesAgregarAFirebase
     this.especialidadesBase.forEach(especialidad => {
       this.especialidadesBaseAgregar.forEach(especialidaNueva => {
-        if(especialidad.especialidad == especialidaNueva){
+        if (especialidad.especialidad == especialidaNueva) {
 
         }
       });
@@ -79,7 +79,7 @@ export class RegisterEspecialistaComponent implements OnInit {
   }
 
   agregarEspecialidadNueva() {
-    if(this.registerEspecialistaForm.get('especialidadNueva')?.value != '' ){
+    if (this.registerEspecialistaForm.get('especialidadNueva')?.value != '') {
       let especialidadNuevaAgregar = this.registerEspecialistaForm.get('especialidadNueva')?.value;
       this.registerEspecialistaForm.get('especialidadNueva')?.setValue('');
 
@@ -208,8 +208,8 @@ export class RegisterEspecialistaComponent implements OnInit {
 
                 //habria que hacer ver si alguna de las especialidades no esta en la lista de especialidades, y agregarla
 
-                  //ARREGLAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                  //this.especialidadService.guardarEspecialidadEnLaLista(especialidadNueva.especialidad);
+                //ARREGLAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //this.especialidadService.guardarEspecialidadEnLaLista(especialidadNueva.especialidad);
 
                 this.ruteo.navigateByUrl("mi_perfil");
               }

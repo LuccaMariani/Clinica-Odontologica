@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { AutenticarService } from './services/autenticar.service';
+import firebase from 'firebase/compat';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +10,12 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   title = 'ClinicaMariani';
 
 
   constructor(private toastrService: ToastrService) {
+
   }
 
   public showSuccess(): void {

@@ -4,7 +4,7 @@
 }
 
 .fondo {
-  background-color: rgb(164, 255, 244);
+  background-color: rgb(199, 255, 248); 
   padding: 2%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
@@ -82,6 +82,26 @@ img:hover {
 }
 
 .containerEspecialistas {
+  width: 100%;
+  overflow:hidden;
+  background-color: transparent;
+  display:inline-block;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+
+.fecha{
+  position:relative;
+  float:left;
+  width:max-content;
+
+  margin: 1px;
+  background-color:transparent;
+
+}
+
+.containerFecha {
   width: 100%;
   overflow:hidden;
   background-color: transparent;

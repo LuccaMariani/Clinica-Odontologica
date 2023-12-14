@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { textChangeRangeIsUnchanged } from 'typescript';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
@@ -14,11 +14,16 @@ export class AutenticarService {
   private esLogeado: any;
   public usuarioLogueado: any = "";
   public currentUser: any = null;
+  // agregados
+  UsuarioActivo: any;
+  promiseUsuario: Subscription = new Subscription;
+  private uidUser = "";
+  //
 
   constructor(
     private afauth: AngularFireAuth,
     private firestore: AngularFirestore
-    ) {
+  ) {
 
     this.obtenerUsuarioDatos();
   }
@@ -29,7 +34,17 @@ export class AutenticarService {
 
   async login(email: string, password: string) {
     try {
-      return await this.afauth.signInWithEmailAndPassword(email, password);
+      let retorno: any;
+      retorno = await this.afauth.signInWithEmailAndPassword(email, password);
+      //
+      this.uidUser = retorno.user.uid
+
+      if (retorno) {
+        this.UsuarioActivo = this.obtenerUsuarioDatos();
+      }
+      //
+
+      return retorno;
     } catch (error) {
       console.log('Error en login: ', error);
       return null;
